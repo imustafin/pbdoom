@@ -1,7 +1,46 @@
-// This file is from https://github.com/pmartin/pocketbook-demo/blob/master/demo01/demo01.cpp
+// from https://github.com/pmartin/pocketbook-demo/blob/master/demo02-gdb/demo02.cpp
 #include "inkview.h"
 
-static const int kFontSize = 42;
+static const int kFontSize = 16;
+
+
+static int test_debug(ifont *font, int a, int b)
+{
+    char buffer[1024];
+    int result = 0;
+
+    fprintf(stderr, "Hi!\n");
+
+    snprintf(buffer, sizeof(buffer), "a=%d b=%d result=%d", a, b, result);
+    DrawTextRect(0, 0, ScreenWidth(), kFontSize, buffer, ALIGN_LEFT);
+    FullUpdate();
+
+    a += 10;
+
+    fprintf(stderr, "a=%d\n", a);
+
+    snprintf(buffer, sizeof(buffer), "a=%d b=%d result=%d", a, b, result);
+    DrawTextRect(0, 20, ScreenWidth(), kFontSize, buffer, ALIGN_LEFT);
+    FullUpdate();
+
+    b *= 2;
+
+    fprintf(stderr, "b=%d\n", b);
+
+    snprintf(buffer, sizeof(buffer), "a=%d b=%d result=%d", a, b, result);
+    DrawTextRect(0, 40, ScreenWidth(), kFontSize, buffer, ALIGN_LEFT);
+    FullUpdate();
+
+    result = a * b;
+    snprintf(buffer, sizeof(buffer), "a=%d b=%d result=%d", a, b, result);
+    DrawTextRect(0, 60, ScreenWidth(), kFontSize, buffer, ALIGN_LEFT);
+    FullUpdate();
+
+    fprintf(stderr, "DONE!");
+
+    return 0;
+}
+
 
 static int main_handler(int event_type, int param_one, int param_two)
 {
@@ -9,17 +48,9 @@ static int main_handler(int event_type, int param_one, int param_two)
         ifont *font = OpenFont("LiberationSans", kFontSize, 0);
 
         ClearScreen();
-
-        // Everything here is done to a buffer
         SetFont(font, BLACK);
-        DrawLine(0, 25, ScreenWidth(), 25, 0x00333333);
-        DrawLine(0, ScreenHeight() - 25, ScreenWidth(), ScreenHeight() - 25, 0x00666666);
-        FillArea(50, 250, ScreenWidth() - 50*2, ScreenHeight() - 250*2, 0x00E0E0E0);
-        FillArea(100, 300, ScreenWidth() - 100*2, ScreenHeight() - 300*2, 0x00A0A0A0);
-        DrawTextRect(0, ScreenHeight()/2 - kFontSize/2, ScreenWidth(), kFontSize, "Sent", ALIGN_CENTER);
 
-        // Copies the buffer to the real screen
-        FullUpdate();
+        test_debug(font, 1000, 3);
 
         CloseFont(font);
     }
