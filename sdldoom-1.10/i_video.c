@@ -26,8 +26,6 @@ rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
 
 #include <stdlib.h>
 
-#include "SDL.h"
-
 #include "m_swap.h"
 #include "doomstat.h"
 #include "i_system.h"
@@ -38,7 +36,8 @@ rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
 #include "doomdef.h"
 
 
-SDL_Surface *screen;
+// PBDoom: TODO
+// SDL_Surface *screen;
 
 // Fake mouse handling.
 boolean		grabMouse;
@@ -54,9 +53,12 @@ static int	multiply=1;
 //  Translates the key 
 //
 
-int xlatekey(SDL_keysym *key)
+int xlatekey(/* SDL_keysym *key */)
 {
+  fprintf(stderr, "xlatekey: TODO\n");
+  return 0;
 
+#if 0
     int rc;
 
     switch(key->sym)
@@ -115,11 +117,13 @@ int xlatekey(SDL_keysym *key)
 
     return rc;
 
+#endif
+
 }
 
 void I_ShutdownGraphics(void)
 {
-  SDL_Quit();
+  fprintf(stderr, "I_ShutdownGraphics: TODO\n");
 }
 
 
@@ -134,8 +138,10 @@ void I_StartFrame (void)
 }
 
 /* This processes SDL events */
-void I_GetEvent(SDL_Event *Event)
+void I_GetEvent(/* SDL_Event *Event */)
 {
+  fprintf(stderr, "I_GetEvent: TODO\n");
+#if 0
     Uint8 buttonstate;
     event_t event;
 
@@ -190,6 +196,7 @@ void I_GetEvent(SDL_Event *Event)
 	I_Quit();
     }
 
+#endif
 }
 
 //
@@ -197,10 +204,13 @@ void I_GetEvent(SDL_Event *Event)
 //
 void I_StartTic (void)
 {
+  fprintf(stderr, "I_StartTic: TODO\n");
+#if 0
     SDL_Event Event;
 
     while ( SDL_PollEvent(&Event) )
 	I_GetEvent(&Event);
+#endif
 }
 
 
@@ -217,7 +227,9 @@ void I_UpdateNoBlit (void)
 //
 void I_FinishUpdate (void)
 {
+  fprintf(stderr, "I_FinishUpdate: TODO\n");
 
+#if 0
     static int	lasttic;
     int		tics;
     int		i;
@@ -367,6 +379,7 @@ void I_FinishUpdate (void)
 	SDL_UnlockSurface(screen);
     }
     SDL_UpdateRect(screen, 0, 0, 0, 0);
+#endif
 }
 
 
@@ -384,6 +397,8 @@ void I_ReadScreen (byte* scr)
 //
 void I_SetPalette (byte* palette)
 {
+  fprintf(stderr, "I_SetPalette: TODO\n");
+#if 0
     int i;
     SDL_Color colors[256];
 
@@ -394,12 +409,15 @@ void I_SetPalette (byte* palette)
 	colors[i].unused = 0;
     }
     SDL_SetColors(screen, colors, 0, 256);
+#endif
 }
 
 
 void I_InitGraphics(void)
 {
+  fprintf(stderr, "I_InitGraphics: TODO\n");
 
+#if 0
     static int	firsttime=1;
     Uint16 video_w, video_h, w, h;
     Uint8 video_bpp;
@@ -468,4 +486,5 @@ void I_InitGraphics(void)
         if ( screens[0] == NULL )
             I_Error("Couldn't allocate screen memory");
     }
+#endif
 }

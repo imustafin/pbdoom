@@ -24,22 +24,9 @@
 #ifndef __DOOMTYPE__
 #define __DOOMTYPE__
 
-
 #ifndef __BYTEBOOL__
 #define __BYTEBOOL__
-// Fixed to use builtin bool type with C++.
-#ifdef __cplusplus
-typedef bool boolean;
-#else
-#ifdef __BEOS__	/* boolean is a builtin type for MWCC */
-#define boolean D_BOOL
-#undef false
-#define false D_false
-#undef true
-#define true D_true
-#endif
-typedef enum {false, true} boolean;
-#endif
+typedef enum { true, false } boolean;
 typedef unsigned char byte;
 #endif
 

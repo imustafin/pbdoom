@@ -26,11 +26,6 @@ rcsid[] = "$Id: i_unix.c,v 1.5 1997/02/03 22:45:10 b1 Exp $";
 
 #include <math.h>
 
-#include "SDL_audio.h"
-#include "SDL_mutex.h"
-#include "SDL_byteorder.h"
-#include "SDL_version.h"
-
 #include "z_zone.h"
 
 #include "m_swap.h"
@@ -402,21 +397,8 @@ I_StartSound
   int		pitch,
   int		priority )
 {
-
-  // UNUSED
-  priority = 0;
-  
-    // Debug.
-    //fprintf( stderr, "starting sound %d", id );
-    
-    // Returns a handle (not used).
-    SDL_LockAudio();
-    id = addsfx( id, vol, steptable[pitch], sep );
-    SDL_UnlockAudio();
-
-    // fprintf( stderr, "/handle is %d\n", id );
-    
-    return id;
+  fprintf(stderr, "I_StartSound: NOOP\n");
+  return 0;
 }
 
 
@@ -440,110 +422,6 @@ int I_SoundIsPlaying(int handle)
 }
 
 
-//
-// This function loops all active (internal) sound
-//  channels, retrieves a given number of samples
-//  from the raw sound data, modifies it according
-//  to the current (internal) channel parameters,
-//  mixes the per channel samples into the given
-//  mixing buffer, and clamping it to the allowed
-//  range.
-//
-// This function currently supports only 16bit.
-//
-void I_UpdateSound(void *unused, Uint8 *stream, int len)
-{
-  // Mix current sound data.
-  // Data, from raw sound, for right and left.
-  register unsigned int	sample;
-  register int		dl;
-  register int		dr;
-  
-  // Pointers in audio stream, left, right, end.
-  signed short*		leftout;
-  signed short*		rightout;
-  signed short*		leftend;
-  // Step in stream, left and right, thus two.
-  int				step;
-
-  // Mixing channel index.
-  int				chan;
-    
-    // Left and right channel
-    //  are in audio stream, alternating.
-    leftout = (signed short *)stream;
-    rightout = ((signed short *)stream)+1;
-    step = 2;
-
-    // Determine end, for left channel only
-    //  (right channel is implicit).
-    leftend = leftout + SAMPLECOUNT*step;
-
-    // Mix sounds into the mixing buffer.
-    // Loop over step*SAMPLECOUNT,
-    //  that is 512 values for two channels.
-    while (leftout != leftend)
-    {
-	// Reset left/right value. 
-	dl = 0;
-	dr = 0;
-
-	// Love thy L2 chache - made this a loop.
-	// Now more channels could be set at compile time
-	//  as well. Thus loop those  channels.
-	for ( chan = 0; chan < NUM_CHANNELS; chan++ )
-	{
-	    // Check channel, if active.
-	    if (channels[ chan ])
-	    {
-		// Get the raw data from the channel. 
-		sample = *channels[ chan ];
-		// Add left and right part
-		//  for this channel (sound)
-		//  to the current data.
-		// Adjust volume accordingly.
-		dl += channelleftvol_lookup[ chan ][sample];
-		dr += channelrightvol_lookup[ chan ][sample];
-		// Increment index ???
-		channelstepremainder[ chan ] += channelstep[ chan ];
-		// MSB is next sample???
-		channels[ chan ] += channelstepremainder[ chan ] >> 16;
-		// Limit to LSB???
-		channelstepremainder[ chan ] &= 65536-1;
-
-		// Check whether we are done.
-		if (channels[ chan ] >= channelsend[ chan ])
-		    channels[ chan ] = 0;
-	    }
-	}
-	
-	// Clamp to range. Left hardware channel.
-	// Has been char instead of short.
-	// if (dl > 127) *leftout = 127;
-	// else if (dl < -128) *leftout = -128;
-	// else *leftout = dl;
-
-	if (dl > 0x7fff)
-	    *leftout = 0x7fff;
-	else if (dl < -0x8000)
-	    *leftout = -0x8000;
-	else
-	    *leftout = dl;
-
-	// Same for right hardware channel.
-	if (dr > 0x7fff)
-	    *rightout = 0x7fff;
-	else if (dr < -0x8000)
-	    *rightout = -0x8000;
-	else
-	    *rightout = dr;
-
-	// Increment current pointers in stream
-	leftout += step;
-	rightout += step;
-    }
-}
-
 void
 I_UpdateSoundParams
 ( int	handle,
@@ -563,61 +441,14 @@ I_UpdateSoundParams
 
 void I_ShutdownSound(void)
 {    
-  SDL_CloseAudio();
+  fprintf(stderr, "I_ShutdownSound. NOOP\n");
 }
 
 
 void
 I_InitSound()
-{ 
-  SDL_AudioSpec wanted;
-  int i;
-  
-  // Secure and configure sound device first.
-  fprintf( stderr, "I_InitSound: ");
-  
-  // Open the audio device
-  wanted.freq = SAMPLERATE;
-  if ( SDL_BYTEORDER == SDL_BIG_ENDIAN ) {
-    wanted.format = AUDIO_S16MSB;
-  } else {
-    wanted.format = AUDIO_S16LSB;
-  }
-  wanted.channels = 2;
-  wanted.samples = SAMPLECOUNT;
-  wanted.callback = I_UpdateSound;
-  if ( SDL_OpenAudio(&wanted, NULL) < 0 ) {
-    fprintf(stderr, "couldn't open audio with desired format\n");
-    return;
-  }
-  SAMPLECOUNT = wanted.samples;
-  fprintf(stderr, " configured audio device with %d samples/slice\n", SAMPLECOUNT);
-
-    
-  // Initialize external data (all sounds) at start, keep static.
-  fprintf( stderr, "I_InitSound: ");
-  
-  for (i=1 ; i<NUMSFX ; i++)
-  { 
-    // Alias? Example is the chaingun sound linked to pistol.
-    if (!S_sfx[i].link)
-    {
-      // Load data from WAD file.
-      S_sfx[i].data = getsfx( S_sfx[i].name, &lengths[i] );
-    }	
-    else
-    {
-      // Previously loaded already?
-      S_sfx[i].data = S_sfx[i].link->data;
-      lengths[i] = lengths[(S_sfx[i].link - S_sfx)/sizeof(sfxinfo_t)];
-    }
-  }
-
-  fprintf( stderr, " pre-cached all sound data\n");
-  
-  // Finished initialization.
-  fprintf(stderr, "I_InitSound: sound module ready\n");
-  SDL_PauseAudio(0);
+{
+  fprintf( stderr, "I_InitSound. NOOP\n");
 }
 
 

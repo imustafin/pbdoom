@@ -23,12 +23,12 @@
 static const char
 rcsid[] = "$Id: m_bbox.c,v 1.1 1997/02/03 22:45:10 b1 Exp $";
 
+#include <sys/time.h>
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <ctype.h>
-#include "SDL.h"
-#include "SDL_timer.h"
 
 #include "doomdef.h"
 #include "m_misc.h"
@@ -98,7 +98,17 @@ byte* I_ZoneBase (int*	size)
 //
 int  I_GetTime (void)
 {
-    return (SDL_GetTicks()*TICRATE)/1000;
+  // from original DOOM
+    struct timeval	tp;
+    struct timezone	tzp;
+    int			newtics;
+    static int		basetime=0;
+  
+    gettimeofday(&tp, &tzp);
+    if (!basetime)
+      basetime = tp.tv_sec;
+    newtics = (tp.tv_sec-basetime)*TICRATE + tp.tv_usec*TICRATE/1000000;
+    return newtics;
 }
 
 
@@ -108,11 +118,7 @@ int  I_GetTime (void)
 //
 void I_Init (void)
 {
-    if ( SDL_Init(SDL_INIT_AUDIO|SDL_INIT_VIDEO) < 0 )
-        I_Error("Could not initialize SDL: %s", SDL_GetError());
-
-    I_InitSound();
-    //  I_InitGraphics();
+  fprintf(stderr, "I_Init: NOOP\n");
 }
 
 //
@@ -130,7 +136,7 @@ void I_Quit (void)
 
 void I_WaitVBL(int count)
 {
-    SDL_Delay((count*1000)/70);
+  usleep (count * (1000000/70) ); 
 }
 
 void I_BeginRead(void)
