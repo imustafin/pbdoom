@@ -61,4 +61,7 @@ void D_PageDrawer (void);
 void D_AdvanceDemo (void);
 void D_StartTitle (void);
 
+void D_DoomLoop_pre();
+void D_DoomLoop_iter();
+
 #endif

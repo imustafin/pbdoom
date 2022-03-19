@@ -66,7 +66,7 @@ static int main_handler(int event_type, int a, int b)
     ClearScreen();
     FullUpdate();
 
-    // doom_main(new_argc, new_argv);
+    doom_main(new_argc, new_argv);
   }
   else if (EVT_KEYPRESS == event_type) {
     CloseApp();

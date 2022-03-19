@@ -31,6 +31,7 @@ static const char rcsid[] = "$Id: d_main.c,v 1.8 1997/02/03 22:45:09 b1 Exp $";
 #define	FGCOLOR		8
 
 
+#include "../pbdoom_state.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -87,18 +88,6 @@ static int access(char *file, int mode)
 
 
 #include "d_main.h"
-
-//
-// D-DoomLoop()
-// Not a globally visible function,
-//  just included for source reference,
-//  called by D_DoomMain, never exits.
-// Manages timing and IO,
-//  calls all ?_Responder, ?_Ticker, and ?_Drawer,
-//  calls I_GetTime, I_StartFrame, and I_StartTic
-//
-void D_DoomLoop (void);
-
 
 char*		wadfiles[MAXWADFILES];
 
@@ -362,52 +351,50 @@ void D_Display (void)
 //
 extern  boolean         demorecording;
 
-void D_DoomLoop (void)
-{
-    if (demorecording)
-	G_BeginRecording ();
-		
-    if (M_CheckParm ("-debugfile"))
+// What was in D_DoomLoop before the actual loop
+void D_DoomLoop_pre() {
+  if (demorecording)
+    G_BeginRecording ();
+
+  if (M_CheckParm ("-debugfile"))
     {
-	char    filename[20];
-	sprintf (filename,"debug%i.txt",consoleplayer);
-	printf ("debug output to: %s\n",filename);
-	debugfile = fopen (filename,"w");
+      char    filename[20];
+      sprintf (filename,"debug%i.txt",consoleplayer);
+      printf ("debug output to: %s\n",filename);
+      debugfile = fopen (filename,"w");
     }
-	
-    I_InitGraphics ();
 
-    while (1)
-    {
-	// frame syncronous IO operations
-	I_StartFrame ();                
-	
-	// process one or more tics
-	if (singletics)
-	{
-	    I_StartTic ();
-	    D_ProcessEvents ();
-	    G_BuildTiccmd (&netcmds[consoleplayer][maketic%BACKUPTICS]);
-	    if (advancedemo)
-		D_DoAdvanceDemo ();
-	    M_Ticker ();
-	    G_Ticker ();
-	    gametic++;
-	    maketic++;
-	}
-	else
-	{
-	    TryRunTics (); // will run at least one tic
-	}
-
-	S_UpdateSounds (players[consoleplayer].mo);// move positional sounds
-
-	// Update display, next frame, with current state.
-	D_Display ();
-    }
+  I_InitGraphics ();
 }
 
+// Do one iteration of D_DoomLoop
+void D_DoomLoop_iter() {
+  // frame syncronous IO operations
+  I_StartFrame ();
 
+  // process one or more tics
+  if (singletics)
+    {
+      I_StartTic ();
+      D_ProcessEvents ();
+      G_BuildTiccmd (&netcmds[consoleplayer][maketic%BACKUPTICS]);
+      if (advancedemo)
+        D_DoAdvanceDemo ();
+      M_Ticker ();
+      G_Ticker ();
+      gametic++;
+      maketic++;
+    }
+  else
+    {
+      TryRunTics (); // will run at least one tic
+    }
+
+  S_UpdateSounds (players[consoleplayer].mo);// move positional sounds
+
+  // Update display, next frame, with current state.
+  D_Display ();
+}
 
 //
 //  DEMO LOOP
@@ -1129,14 +1116,16 @@ printf("added\n");
     {
 	singledemo = true;              // quit after one demo
 	G_DeferedPlayDemo (myargv[p+1]);
-	D_DoomLoop ();  // never returns
+  start_D_DoomLoop();
+  return;
     }
 	
     p = M_CheckParm ("-timedemo");
     if (p && p < myargc-1)
     {
 	G_TimeDemo (myargv[p+1]);
-	D_DoomLoop ();  // never returns
+  start_D_DoomLoop();
+  return;
     }
 	
     p = M_CheckParm ("-loadgame");
@@ -1159,5 +1148,5 @@ printf("added\n");
 
     }
 
-    D_DoomLoop ();  // never returns
+    start_D_DoomLoop();
 }

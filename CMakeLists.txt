@@ -10,6 +10,8 @@ include_directories(${FREETYPE_INCLUDE_DIR_freetype2})
 
 add_executable(pbdoom.app
   main.c
+  pbdoom_state.h
+  pbdoom_state.c
 
 
 sdldoom-1.10/am_map.c
