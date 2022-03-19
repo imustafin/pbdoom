@@ -391,25 +391,20 @@ void I_ReadScreen (byte* scr)
     memcpy (scr, screens[0], SCREENWIDTH*SCREENHEIGHT);
 }
 
+int ink_palette[256];
 
 //
 // I_SetPalette
 //
 void I_SetPalette (byte* palette)
 {
-  fprintf(stderr, "I_SetPalette: TODO\n");
-#if 0
-    int i;
-    SDL_Color colors[256];
+  for (int i = 0; i < 256; i++) {
+    byte r = gammatable[usegamma][*palette++];
+    byte g = gammatable[usegamma][*palette++];
+    byte b = gammatable[usegamma][*palette++];
 
-    for ( i=0; i<256; ++i ) {
-	colors[i].r = gammatable[usegamma][*palette++];
-	colors[i].g = gammatable[usegamma][*palette++];
-	colors[i].b = gammatable[usegamma][*palette++];
-	colors[i].unused = 0;
-    }
-    SDL_SetColors(screen, colors, 0, 256);
-#endif
+    ink_palette[i] = (r << 16) | (g << 8) | b;
+  }
 }
 
 
