@@ -37,7 +37,10 @@ rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
 
 #include "doomdef.h"
 
+
 #include "inkview.h"
+
+ink_render_mode i_render_mode = DYNAMIC_A2;
 
 // Fake mouse handling.
 boolean		grabMouse;
@@ -81,6 +84,10 @@ void I_GetEvent(pbdoom_event *e)
       event.type = ev_keyup;
       event.data1 = e->a;
       D_PostEvent(&event);
+      break;
+
+    case PBDOOM_EVENT_SWITCH_RENDER_MODE:
+      i_render_mode = e->a;
       break;
 
     case PBDOOM_EVENT_EXIT:
@@ -146,7 +153,24 @@ void I_FinishUpdate (void)
 
     line += SCREENWIDTH;
   }
-  DynamicUpdateA2(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
+  switch (i_render_mode) {
+  case DYNAMIC_A2:
+    DynamicUpdateA2(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
+    break;
+  case DITHER_AREA_PATTERN_2_LEVEL:
+    DitherAreaPattern2Level(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
+    PartialUpdate(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
+    break;
+  case DITHER_MANUAL_2_PATTERN:
+    DitherArea(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT, 2, DITHER_PATTERN);
+    PartialUpdate(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
+    break;
+  case NO_DITHER:
+    PartialUpdate(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
+    break;
+  default:
+    I_Error("Unknown i_render_mode %d", i_render_mode);
+  }
 }
 
 

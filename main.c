@@ -10,7 +10,13 @@ int new_argc;
 
 #define BUTTON_FONT_SIZE 6
 
+typedef enum {
+  BTYPE_NORMAL,
+  BTYPE_RENDER,
+} btype_t;
+
 typedef struct {
+  btype_t btype;
   int doom_code;
   char *title;
   int x;
@@ -20,17 +26,21 @@ typedef struct {
   int pressed;
 } button_t;
 
-#define BUTTONS_N 9
+#define BUTTONS_N 13
 button_t buttons[BUTTONS_N] = {
-  {KEY_UPARROW, "↑", 200, 1400, 100, 100},
-  {KEY_DOWNARROW, "↓", 200, 1500, 100, 100},
-  {KEY_LEFTARROW, "←", 100, 1500, 100, 100},
-  {KEY_RIGHTARROW, "→", 300, 1500, 100, 100},
-  {KEY_ENTER, "ENTER", 400, 1400, 200, 200},
-  {'y', "Y", 400, 1200, 100, 100},
-  {'n', "N", 500, 1200, 100, 100},
-  {KEY_RCTRL, "CTRL", 900, 1200, 200, 200},
-  {' ', "␣", 800, 1400, 400, 100}
+  {BTYPE_NORMAL, KEY_UPARROW, "↑", 200, 1400, 100, 100},
+  {BTYPE_NORMAL, KEY_DOWNARROW, "↓", 200, 1600, 100, 100},
+  {BTYPE_NORMAL, KEY_LEFTARROW, "←", 100, 1500, 100, 100},
+  {BTYPE_NORMAL, KEY_RIGHTARROW, "→", 300, 1500, 100, 100},
+  {BTYPE_NORMAL, KEY_ENTER, "ENTER", 500, 1400, 200, 200},
+  {BTYPE_NORMAL, 'y', "Y", 500, 1200, 100, 100},
+  {BTYPE_NORMAL, 'n', "N", 600, 1200, 100, 100},
+  {BTYPE_NORMAL, KEY_RCTRL, "CTRL", 1000, 1400, 400, 200},
+  {BTYPE_NORMAL, ' ', "␣", 1000, 1600, 400, 100},
+  {BTYPE_RENDER, DYNAMIC_A2, "DynamicA2", 50, 1000, 250, 100},
+  {BTYPE_RENDER, DITHER_AREA_PATTERN_2_LEVEL, "DitherAreaPattern2Level", 350, 1000, 350, 100},
+  {BTYPE_RENDER, DITHER_MANUAL_2_PATTERN, "DitherArea(2, PATTERN)", 750, 1000, 350, 100},
+  {BTYPE_RENDER, NO_DITHER, "No Dither", 1150, 1000, 200, 100}
 };
 
 void draw_buttons() {
@@ -81,15 +91,22 @@ void handle_buttons(int t, int index, int cnt) {
     int pressed = presses[i];
 
     if (pressed != b->pressed) {
-      pbdoom_event e = {
-        pressed ? PBDOOM_EVENT_KEYDOWN : PBDOOM_EVENT_KEYUP,
-        b->doom_code,
-        0
-      };
+      b->pressed = pressed;
+
+      int e_type;
+      pbdoom_event e;
+      e.a = b->doom_code;
+      e.b = 0;
+      if (b->btype == BTYPE_NORMAL) {
+        e.type = pressed ? PBDOOM_EVENT_KEYDOWN : PBDOOM_EVENT_KEYUP;
+      } else if (b->btype == BTYPE_RENDER) {
+        if (!pressed) {
+          continue;
+        }
+        e.type = PBDOOM_EVENT_SWITCH_RENDER_MODE;
+      }
 
       pbdoom_post_event(e);
-
-      b->pressed = pressed;
     }
   }
 }
