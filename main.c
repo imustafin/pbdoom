@@ -8,8 +8,11 @@
 char **new_argv;
 int new_argc;
 
+#define BUTTON_FONT_SIZE 6
+
 typedef struct {
   int doom_code;
+  char *title;
   int x;
   int y;
   int w;
@@ -19,15 +22,15 @@ typedef struct {
 
 #define BUTTONS_N 9
 button_t buttons[BUTTONS_N] = {
-  {KEY_UPARROW, 200, 1400, 100, 100},
-  {KEY_DOWNARROW, 200, 1500, 100, 100},
-  {KEY_LEFTARROW, 100, 1500, 100, 100},
-  {KEY_RIGHTARROW, 300, 1500, 100, 100},
-  {KEY_ENTER, 400, 1400, 200, 200},
-  {'y', 400, 1200, 100, 100},
-  {'n', 500, 1200, 100, 100},
-  {KEY_RCTRL, 900, 1200, 200, 200},
-  {' ', 800, 1400, 400, 100}
+  {KEY_UPARROW, "↑", 200, 1400, 100, 100},
+  {KEY_DOWNARROW, "↓", 200, 1500, 100, 100},
+  {KEY_LEFTARROW, "←", 100, 1500, 100, 100},
+  {KEY_RIGHTARROW, "→", 300, 1500, 100, 100},
+  {KEY_ENTER, "ENTER", 400, 1400, 200, 200},
+  {'y', "Y", 400, 1200, 100, 100},
+  {'n', "N", 500, 1200, 100, 100},
+  {KEY_RCTRL, "CTRL", 900, 1200, 200, 200},
+  {' ', "␣", 800, 1400, 400, 100}
 };
 
 void draw_button(button_t *b) {
@@ -35,6 +38,7 @@ void draw_button(button_t *b) {
     FillArea(b->x, b->y, b->w, b->h, BLACK);
   } else {
     FillArea(b->x, b->y, b->w, b->h, WHITE);
+    DrawTextRect(b->x, b->y, b->w, b->h, b->title, ALIGN_CENTER | VALIGN_MIDDLE);
     DrawRect(b->x, b->y, b->w, b->h, BLACK);
   }
   PartialUpdate(b->x, b->y, b->w, b->h);
@@ -100,6 +104,9 @@ void handle_buttons(int t, int index, int cnt) {
 }
 
 void setup_app() {
+  ifont *button_font = OpenFont("LiberationSans", BUTTON_FONT_SIZE, 0);
+  SetFont(button_font, BLACK);
+
   SetPanelType(PANEL_ENABLED);
   ClearScreen();
   DrawPanel(NULL, "", "", 0);
