@@ -51,7 +51,11 @@ void handle_buttons(int t, int a, int b) {
     for (int i = 0; i < BUTTONS_N; i++) {
       button_t *b = &buttons[i];
 
-      b->pressed = (x >= b->x && x <= b->x + b->w) && (y >= b->y && y <= b->y + b->h);
+      int pressed = (t != EVT_POINTERUP)
+        && (x >= b->x && x <= b->x + b->w)
+        && (y >= b->y && y <= b->y + b->h);
+
+      b->pressed = pressed;
     }
 
     draw_buttons();
