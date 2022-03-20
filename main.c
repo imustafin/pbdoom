@@ -17,7 +17,7 @@ typedef struct {
   int pressed;
 } button_t;
 
-#define BUTTONS_N 7
+#define BUTTONS_N 9
 button_t buttons[BUTTONS_N] = {
   {KEY_UPARROW, 200, 1400, 100, 100},
   {KEY_DOWNARROW, 200, 1500, 100, 100},
@@ -25,7 +25,9 @@ button_t buttons[BUTTONS_N] = {
   {KEY_RIGHTARROW, 300, 1500, 100, 100},
   {KEY_ENTER, 400, 1400, 200, 200},
   {'y', 400, 1200, 100, 100},
-  {'n', 500, 1200, 100, 100}
+  {'n', 500, 1200, 100, 100},
+  {KEY_RCTRL, 900, 1200, 200, 200},
+  {' ', 800, 1400, 400, 100}
 };
 
 void draw_button(button_t *b) {
