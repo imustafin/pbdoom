@@ -58,13 +58,20 @@ void handle_buttons(int t, int a, int b) {
   }
 }
 
+void setup_app() {
+  SetPanelType(PANEL_ENABLED);
+  ClearScreen();
+  DrawPanel(NULL, "", "", 0);
+  draw_buttons();
+  FullUpdate();
+}
+
 static int main_handler(int event_type, int a, int b)
 {
   handle_buttons(event_type, a, b);
 
   if (EVT_INIT == event_type) {
-    ClearScreen();
-    FullUpdate();
+    setup_app();
 
     doom_main(new_argc, new_argv);
   }
