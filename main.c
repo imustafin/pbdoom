@@ -46,33 +46,56 @@ void draw_buttons() {
   }
 }
 
-void handle_buttons(int t, int a, int b) {
-  if (t == EVT_POINTERDOWN || t == EVT_POINTERMOVE || t == EVT_POINTERUP) {
-    int x = a;
-    int y = b;
+void handle_buttons(int t, int index, int cnt) {
+  if (t != EVT_MTSYNC) {
+    return;
+  }
 
-    for (int i = 0; i < BUTTONS_N; i++) {
-      button_t *b = &buttons[i];
+  int presses[BUTTONS_N];
+  for (int i = 0; i < BUTTONS_N; i++) {
+    presses[i] = 0;
+  }
 
-      int pressed = (t != EVT_POINTERUP)
-        && (x >= b->x && x <= b->x + b->w)
-        && (y >= b->y && y <= b->y + b->h);
+  iv_mtinfo *mt_all = GetTouchInfoI(index);
 
-      if (pressed != b->pressed) {
-        pbdoom_event e = {
-          pressed ? PBDOOM_EVENT_KEYDOWN : PBDOOM_EVENT_KEYUP,
-          b->doom_code,
-          0
-        };
+  for (int i = 0; i < cnt; i++) {
+    iv_mtinfo *mt = mt_all + i;
 
-        pbdoom_post_event(e);
-
-        b->pressed = pressed;
-        draw_button(b);
-      }
+    if (!mt->active) {
+      continue;
     }
 
-    draw_buttons();
+    int x = mt->x;
+    int y = mt->y;
+
+    for (int j = 0; j < BUTTONS_N; j++) {
+      button_t *b = &buttons[j];
+
+      int pressed = (x >= b->x && x <= b->x + b->w)
+        && (y >= b->y && y <= b->y + b->h);
+      if (pressed) {
+        presses[j] = 1;
+      }
+    }
+  }
+
+  for (int i = 0; i < BUTTONS_N; i++) {
+    button_t *b = &buttons[i];
+
+    int pressed = presses[i];
+
+    if (pressed != b->pressed) {
+      pbdoom_event e = {
+        pressed ? PBDOOM_EVENT_KEYDOWN : PBDOOM_EVENT_KEYUP,
+        b->doom_code,
+        0
+      };
+
+      pbdoom_post_event(e);
+
+      b->pressed = pressed;
+      draw_button(b);
+    }
   }
 }
 
