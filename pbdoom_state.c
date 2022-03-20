@@ -7,7 +7,6 @@
 #define D_DOOM_LOOP_FREQ (1000 / TICRATE)
 
 void D_DoomLoop_iter_pbdoom() {
-  fprintf(stderr, "D_DoomLoop_iter_pbdoom\n");
   D_DoomLoop_iter();
 
   SetWeakTimer("D_DoomLoop", D_DoomLoop_iter_pbdoom, D_DOOM_LOOP_FREQ);
