@@ -26,6 +26,7 @@ rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
 
 #include <stdlib.h>
 
+#include "../events.h"
 
 #include "m_swap.h"
 #include "doomstat.h"
@@ -139,66 +140,28 @@ void I_StartFrame (void)
 
 }
 
-/* This processes SDL events */
-void I_GetEvent(/* SDL_Event *Event */)
+void I_GetEvent(pbdoom_event *e)
 {
-  fprintf(stderr, "I_GetEvent: TODO\n");
-#if 0
-    Uint8 buttonstate;
-    event_t event;
+  event_t event;
 
-    switch (Event->type)
+  switch (e->type)
     {
-      case SDL_KEYDOWN:
-	event.type = ev_keydown;
-	event.data1 = xlatekey(&Event->key.keysym);
-	D_PostEvent(&event);
-        break;
+    case PBDOOM_EVENT_KEYDOWN:
+      event.type = ev_keydown;
+      event.data1 = e->a;
+      D_PostEvent(&event);
+      break;
 
-      case SDL_KEYUP:
-	event.type = ev_keyup;
-	event.data1 = xlatekey(&Event->key.keysym);
-	D_PostEvent(&event);
-	break;
+    case PBDOOM_EVENT_KEYUP:
+      event.type = ev_keyup;
+      event.data1 = e->a;
+      D_PostEvent(&event);
+      break;
 
-      case SDL_MOUSEBUTTONDOWN:
-      case SDL_MOUSEBUTTONUP:
-	buttonstate = SDL_GetMouseState(NULL, NULL);
-	event.type = ev_mouse;
-	event.data1 = 0
-	    | (buttonstate & SDL_BUTTON(1) ? 1 : 0)
-	    | (buttonstate & SDL_BUTTON(2) ? 2 : 0)
-	    | (buttonstate & SDL_BUTTON(3) ? 4 : 0);
-	event.data2 = event.data3 = 0;
-	D_PostEvent(&event);
-	break;
-
-#if (SDL_MAJOR_VERSION >= 0) && (SDL_MINOR_VERSION >= 9)
-      case SDL_MOUSEMOTION:
-	/* Ignore mouse warp events */
-	if ((Event->motion.x != screen->w/2)||(Event->motion.y != screen->h/2))
-	{
-	    /* Warp the mouse back to the center */
-	    if (grabMouse) {
-		SDL_WarpMouse(screen->w/2, screen->h/2);
-	    }
-	    event.type = ev_mouse;
-	    event.data1 = 0
-	        | (Event->motion.state & SDL_BUTTON(1) ? 1 : 0)
-	        | (Event->motion.state & SDL_BUTTON(2) ? 2 : 0)
-	        | (Event->motion.state & SDL_BUTTON(3) ? 4 : 0);
-	    event.data2 = Event->motion.xrel << 2;
-	    event.data3 = -Event->motion.yrel << 2;
-	    D_PostEvent(&event);
-	}
-	break;
-#endif
-
-      case SDL_QUIT:
-	I_Quit();
+    case PBDOOM_EVENT_EXIT:
+      I_Quit();
+      break;
     }
-
-#endif
 }
 
 //
@@ -206,13 +169,10 @@ void I_GetEvent(/* SDL_Event *Event */)
 //
 void I_StartTic (void)
 {
-  fprintf(stderr, "I_StartTic: TODO\n");
-#if 0
-    SDL_Event Event;
-
-    while ( SDL_PollEvent(&Event) )
-	I_GetEvent(&Event);
-#endif
+  pbdoom_event *e;
+  while ((e = pbdoom_poll_event())) {
+    I_GetEvent(e);
+  }
 }
 
 

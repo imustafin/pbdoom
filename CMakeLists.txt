@@ -12,6 +12,8 @@ add_executable(pbdoom.app
   main.c
   pbdoom_state.h
   pbdoom_state.c
+  events.h
+  events.c
 
 
 sdldoom-1.10/am_map.c
