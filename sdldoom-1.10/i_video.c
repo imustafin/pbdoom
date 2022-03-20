@@ -145,8 +145,7 @@ void I_FinishUpdate (void)
 
     line += SCREENWIDTH;
   }
-  DitherAreaPattern2Level(0, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
-  PartialUpdate(0, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
+  DynamicUpdateA2(0, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
 }
 
 

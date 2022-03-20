@@ -33,20 +33,12 @@ button_t buttons[BUTTONS_N] = {
   {' ', "␣", 800, 1400, 400, 100}
 };
 
-void draw_button(button_t *b) {
-  if (b->pressed) {
-    FillArea(b->x, b->y, b->w, b->h, BLACK);
-  } else {
+void draw_buttons() {
+  for (int i = 0; i < BUTTONS_N; i++) {
+    button_t *b = &buttons[i];
     FillArea(b->x, b->y, b->w, b->h, WHITE);
     DrawTextRect(b->x, b->y, b->w, b->h, b->title, ALIGN_CENTER | VALIGN_MIDDLE);
     DrawRect(b->x, b->y, b->w, b->h, BLACK);
-  }
-  PartialUpdate(b->x, b->y, b->w, b->h);
-}
-
-void draw_buttons() {
-  for (int i = 0; i < BUTTONS_N; i++) {
-    draw_button(&buttons[i]);
   }
 }
 
@@ -98,7 +90,6 @@ void handle_buttons(int t, int index, int cnt) {
       pbdoom_post_event(e);
 
       b->pressed = pressed;
-      draw_button(b);
     }
   }
 }
