@@ -44,6 +44,8 @@ byte*	I_ZoneBase (int *size);
 // returns current time in tics.
 int I_GetTime (void);
 
+long I_GetTimeMS();
+
 
 //
 // Called by D_DoomLoop,

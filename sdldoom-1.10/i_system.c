@@ -23,7 +23,7 @@
 static const char
 rcsid[] = "$Id: m_bbox.c,v 1.1 1997/02/03 22:45:10 b1 Exp $";
 
-#include <sys/time.h>
+#include <time.h>
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -91,6 +91,22 @@ byte* I_ZoneBase (int*	size)
 }
 
 
+// Time since start of the program in msec
+long I_GetTimeMS() {
+  struct timespec spec;
+  clock_gettime(CLOCK_REALTIME, &spec);
+
+  static time_t basetime = 0;
+  if (!basetime) {
+    basetime = spec.tv_sec;
+  }
+
+  time_t s = spec.tv_sec - basetime;
+
+  long ms = spec.tv_nsec / 1000000;
+
+  return s * 1000 + ms;
+}
 
 //
 // I_GetTime
@@ -98,17 +114,7 @@ byte* I_ZoneBase (int*	size)
 //
 int  I_GetTime (void)
 {
-  // from original DOOM
-    struct timeval	tp;
-    struct timezone	tzp;
-    int			newtics;
-    static int		basetime=0;
-  
-    gettimeofday(&tp, &tzp);
-    if (!basetime)
-      basetime = tp.tv_sec;
-    newtics = (tp.tv_sec-basetime)*TICRATE + tp.tv_usec*TICRATE/1000000;
-    return newtics;
+    return I_GetTimeMS() / TICRATE;
 }
 
 
