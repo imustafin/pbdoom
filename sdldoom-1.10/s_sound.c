@@ -258,6 +258,8 @@ S_StartSoundAtVolume
   int		volume )
 {
 
+  // Disabled in PBDoom
+#if 0
   int		rc;
   int		sep;
   int		pitch;
@@ -392,6 +394,7 @@ S_StartSoundAtVolume
 				       sep,
 				       pitch,
 				       priority);
+#endif
 }	
 
 void

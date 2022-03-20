@@ -397,7 +397,7 @@ I_StartSound
   int		pitch,
   int		priority )
 {
-  fprintf(stderr, "I_StartSound: NOOP\n");
+  // Disabled in PBDoom
   return 0;
 }
 
