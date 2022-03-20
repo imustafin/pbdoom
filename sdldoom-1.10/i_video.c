@@ -136,16 +136,17 @@ void I_FinishUpdate (void)
     }
 
   unsigned char *line = screens[0];
-  int k = 4; // size of one pixel
-  FillArea(0, 0, k * SCREENWIDTH, k * SCREENHEIGHT, WHITE);
+  int k = ScreenWidth() / SCREENWIDTH; // size of one pixel
+  int ox = (ScreenWidth() - (k * SCREENWIDTH)) / 2;
+  FillArea(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT, WHITE);
   for (int i = 0; i < SCREENHEIGHT; i++) {
     for (int j = 0; j < SCREENWIDTH; j++) {
-      FillArea(j * k, i * k, k, k, ink_palette[line[j]]);
+      FillArea(j * k + ox, i * k, k, k, ink_palette[line[j]]);
     }
 
     line += SCREENWIDTH;
   }
-  DynamicUpdateA2(0, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
+  DynamicUpdateA2(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
 }
 
 
