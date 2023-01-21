@@ -8,7 +8,7 @@ include_directories(${INKVIEW_INCLUDE_DIR})
 find_package(Freetype REQUIRED)
 include_directories(${FREETYPE_INCLUDE_DIR_freetype2})
 
-add_executable(pbdoom.app
+add_executable(game.app
   main.c
   pbdoom_state.h
   pbdoom_state.c
@@ -144,9 +144,7 @@ sdldoom-1.10/z_zone.c
 sdldoom-1.10/z_zone.h
 
 )
-target_link_libraries(pbdoom.app ${INKVIEW_LIBRARIES})
-target_link_libraries(pbdoom.app m)
+target_link_libraries(game.app ${INKVIEW_LIBRARIES})
+target_link_libraries(game.app m)
 
-# target_compile_options(pbdoom.app PRIVATE -Wall -Wextra -Wpedantic -Werror)
-target_compile_options(pbdoom.app PRIVATE -Werror=implicit-function-declaration)
-# target_compile_definitions(pbdoom.app PRIVATE -DNORMALUNIX -DLINUX)
+target_compile_options(game.app PRIVATE -Werror=implicit-function-declaration)

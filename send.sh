@@ -2,9 +2,9 @@
 
 set -e
 
-LOCAL_PATH=./build/pbdoom.app
-REMOTE_APP_NAME=pbdoom.app
-REMOTE_IP=192.168.31.112
+LOCAL_PATH=./build/game.app
+REMOTE_APP_NAME=pbdoom/game.app
+REMOTE_IP=192.168.43.40
 REMOTE_PORT=10003
 
 echo "Sending '$LOCAL_PATH' to '$REMOTE_IP:$REMOTE_PORT/$REMOTE_APP_NAME'"
