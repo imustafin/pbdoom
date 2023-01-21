@@ -1,0 +1,64 @@
+name: Build
+on: [push]
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    env:
+      GLOBAL_CACHE_VERSION: 1
+      PBDOOM_PATH: pbdoom
+      SDK_DOWNLOAD_PATH: sdk
+      SDK_REPO: pocketbook/SDK_6.3.0
+      SDK_REF: 23eb32c3a011a1df4ce3d8f22150dcdd34cbc75a
+      SDK_VARIANT: SDK-A13
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          path: ${{ env.PBDOOM_PATH }}
+
+      - name: Cache SDK
+        id: cache-sdk
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.SDK_DOWNLOAD_PATH }}
+          key: ${{ runner.os }}-sdk-${{ env.SDK_REPO }}-${{ env.SDK_REF }}-${{ env.SDK_VARIANT }}-${{ env.GLOBAL_CACHE_VERSION }}
+
+      - name: Checkout SDK
+        if: steps.cache-sdk.outputs.cache-hit != 'true'
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ env.SDK_REPO }}
+          ref: ${{ env.SDK_REF }}
+          path: ${{ env.SDK_DOWNLOAD_PATH }}
+
+      - name: Remove unused sdk variants
+        if: steps.cache-sdk.outputs.cache-hit != 'true'
+        run: |
+          cd $SDK_DOWNLOAD_PATH
+          rm -r $( ls -A | grep -v $SDK_VARIANT )
+          cd ..
+
+      - name: Install build deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install libtinfo5
+
+      - name: Build
+        run: |
+          $SDK_DOWNLOAD_PATH/$SDK_VARIANT/bin/update_path.sh
+
+          cd $PBDOOM_PATH
+          echo "../$SDK_DOWNLOAD_PATH/$SDK_VARIANT" > sdk_path
+          ./build.sh
+          cd ..
+
+          mkdir -p artifacts/applications/pbdoom
+          cp $PBDOOM_PATH/build/game.app artifacts/applications/pbdoom/game.app
+          cp $PBDOOM_PATH/pbdoom.app artifacts/applications
+
+
+      - name: Save artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Applications
+          path: artifacts/applications

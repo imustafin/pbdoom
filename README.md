@@ -3,26 +3,27 @@ Doom for PocketBook eInk devices.
 
 ## Installation
 1. Download the game from the releases page https://github.com/imustafin/pbdoom/releases
-2. Unzip the archive to the `applications` directory on the ereader. You should get
-  this structure:
+2. Unzip the archive to the `applications` directory on the ereader.
+3. Place your WADs in the `applications/pbdoom` directory. WAD filenames should
+   be in lower case (not `DOOM2.WAD` but `doom2.wad`)
+4. You should have this structure:
   ```
   applications
   ├── pbdoom
-  │   └── pbdoom.app
+  │   ├── doom2.wad
+  │   ├── game.app
   └── pbdoom.app
   ```
-3. Place your WADs in the `applications/pbdoom` directory. WAD filenames should
-   be in lower case (not `DOOM2.WAD` but `doom2.wad`)
-4. Run the game using the `pbdoom` icon from the ereader applications menu
+5. Run the game using the `pbdoom` icon from the ereader applications menu
 
 ## Development process
 The following describes a development process for building the game on Linux.
 
 ### Building
-1. Obtain the SDK (we use https://github.com/c3pio-man/SDK_6.3.0/releases/tag/6.3.2)
+1. Obtain the SDK (we use https://github.com/pocketbook/SDK_6.3.0/tree/5.19)
 2. Write the path to SDK to `sdk_path` (e.g. `../SDK_6.3.0-6.3.2/SDK-A13`)
 3. Run `./build.sh`
-  * The executable `pbdoom.app` will be located in the `build` dir
+  * The executable `game.app` will be located in the `build` dir
 
 ### App sender-receiver
 To make the development more convenient we can use the approach of
