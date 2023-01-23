@@ -6,6 +6,8 @@
 #include "sdldoom-1.10/i_main.h"
 #include "sdldoom-1.10/doomdef.h"
 
+#include "version.h"
+
 ifont *button_font;
 
 void set_font() {
@@ -67,10 +69,22 @@ void send_render_event(ink_render_mode mode) {
 }
 
 void main_menu_handler(int i) {
-  printf("MAIN MENU %d\n", i);
   switch (i) {
   case -1:
     main_menu = NULL;
+    break;
+  case 2:
+    main_menu = NULL;
+    Dialog(
+      0,
+      "About pbdoom",
+      "Pbdoom " GIT_TAG "\n"
+      "by Ilgiz Mustafin, based on SDL Doom by Sam Lantinga\n"
+      "Get the Source code and other info at \n"
+      "https://github.com/imustafin/pbdoom"
+      ,
+      "Ok", NULL, NULL
+    );
     break;
   case 10:
     send_render_event(DYNAMIC_A2);
@@ -121,6 +135,11 @@ imenu main_menu_imenu[] = {
     1,
     "Render",
     render_submenu
+  },
+  {
+    ITEM_ACTIVE,
+    2,
+    "About"
   },
   0
 };
@@ -268,6 +287,11 @@ void compute_button_positions() {
 void draw_panel() {
   DrawRect(0, 0, ScreenWidth(), panel_height, BLACK);
   DrawRect(ScreenWidth() - panel_height, 0, panel_height, panel_height, BLACK);
+
+  DrawTextRect(0, 0, ScreenWidth(), panel_height,
+    "pbdoom " GIT_TAG,
+    ALIGN_CENTER | VALIGN_MIDDLE
+  );
 }
 
 void draw_gui() {

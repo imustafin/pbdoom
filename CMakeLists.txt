@@ -8,6 +8,23 @@ include_directories(${INKVIEW_INCLUDE_DIR})
 find_package(Freetype REQUIRED)
 include_directories(${FREETYPE_INCLUDE_DIR_freetype2})
 
+### Fill version.h.in with versions https://jonathanhamberg.com/post/cmake-embedding-git-hash/
+# Get tag info
+execute_process(
+  COMMAND git describe --tags
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_TAG
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+configure_file(
+  ${CMAKE_SOURCE_DIR}/version.h.in
+  ${CMAKE_BINARY_DIR}/generated/version.h
+)
+include_directories(${CMAKE_BINARY_DIR}/generated)
+### end version
+
+
 add_executable(game.app
   main.c
   pbdoom_state.h
