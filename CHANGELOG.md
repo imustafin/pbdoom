@@ -30,5 +30,5 @@ page
 - Control buttons placement is computed based on screen dimensions [#1](https://github.com/imustafin/pbdoom/issues/1)
 
 [unreleased]: https://github.com/imustafin/pbdoom/compare/v0.0.2...HEAD
-[v0.0.2]: https://github.com/imustafin/pbdoom/compare/tag/v0.0.1...v0.0.2
+[v0.0.2]: https://github.com/imustafin/pbdoom/compare/v0.0.1...v0.0.2
 [v0.0.1]: https://github.com/imustafin/pbdoom/releases/tag/v0.0.1
