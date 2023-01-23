@@ -46,16 +46,17 @@ Don't forget to update ip addresses and ports in all scripts.
 Check the ereader's ip in wifi settings for the connected network.
 
 ### Releasing
-1. Choose the release version (e.g. `0.0.1`)
+1. Choose the release version (e.g. `v0.0.1`)
 2. Update the changelog
-    1. Change `[Unreleased]` title to the version (`[0.0.1]`)
+    1. Change `[Unreleased]` title to the version (`[v0.0.1]`)
     2. Make a new `[Unreleased]` title with `### Added` and `### Fixed`
-    3. At the end of file, add link for the release (`[0.0.1] .../compare/v0.0.0...v0.0.1`)
+    3. At the end of file, add link for the release (`[v0.0.1] .../compare/v0.0.0...v0.0.1`)
     4. Update the `[unreleased]` link (`[unreleased]: .../compare/v0.0.1...HEAD`)
+3. Add and push tag (`v0.0.1`)
 3. Push changelog updates to `main`
 4. Grab the artifact
 5. Make a GitHub release
-    1. Set the version, add `v` prefix (`v0.0.1`)
+    1. Set the version
     2. Paste changelog of the release
         * Don't add the release title (already shown by GitHub)
         * Make headings (Added, Fixed) start from `h1` (`#`)
