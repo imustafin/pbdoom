@@ -1,6 +1,8 @@
 # PBDoom
 Doom for PocketBook eInk devices.
 
+<img src="docs/a.png" width=200 /><img src="docs/b.png" width=200 /><img src="docs/c.png" width=200 />
+
 ## Installation
 1. Download the game from the releases page https://github.com/imustafin/pbdoom/releases
 2. Unzip the archive to the `applications` directory on the ereader.
