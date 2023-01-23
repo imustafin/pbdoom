@@ -14,6 +14,8 @@ add_executable(game.app
   pbdoom_state.c
   events.h
   events.c
+  pbdoom/render.h
+  pbdoom/render.c
 
 
 sdldoom-1.10/am_map.c

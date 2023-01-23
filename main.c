@@ -1,6 +1,7 @@
 #include "inkview.h"
 
 #include "events.h"
+#include "pbdoom/render.h"
 
 #include "sdldoom-1.10/i_main.h"
 #include "sdldoom-1.10/doomdef.h"

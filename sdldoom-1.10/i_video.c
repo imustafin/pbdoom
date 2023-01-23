@@ -27,6 +27,7 @@ rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
 #include <stdlib.h>
 
 #include "../events.h"
+#include "../pbdoom/render.h"
 
 #include "m_swap.h"
 #include "doomstat.h"
@@ -36,11 +37,6 @@ rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
 #include "d_main.h"
 
 #include "doomdef.h"
-
-
-#include "inkview.h"
-
-ink_render_mode i_render_mode = DYNAMIC_A2;
 
 // Fake mouse handling.
 boolean		grabMouse;
@@ -87,7 +83,7 @@ void I_GetEvent(pbdoom_event *e)
       break;
 
     case PBDOOM_EVENT_SWITCH_RENDER_MODE:
-      i_render_mode = e->a;
+      pbdoom_render_set_mode(e->a);
       break;
 
     case PBDOOM_EVENT_EXIT:
@@ -116,8 +112,6 @@ void I_UpdateNoBlit (void)
     // what is this?
 }
 
-int ink_palette[256];
-
 //
 // I_FinishUpdate
 //
@@ -142,35 +136,7 @@ void I_FinishUpdate (void)
         screens[0][ (SCREENHEIGHT-1)*SCREENWIDTH + i] = 0x0;
     }
 
-  unsigned char *line = screens[0];
-  int k = ScreenWidth() / SCREENWIDTH; // size of one pixel
-  int ox = (ScreenWidth() - (k * SCREENWIDTH)) / 2;
-  FillArea(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT, WHITE);
-  for (int i = 0; i < SCREENHEIGHT; i++) {
-    for (int j = 0; j < SCREENWIDTH; j++) {
-      FillArea(j * k + ox, i * k, k, k, ink_palette[line[j]]);
-    }
-
-    line += SCREENWIDTH;
-  }
-  switch (i_render_mode) {
-  case DYNAMIC_A2:
-    DynamicUpdateA2(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
-    break;
-  case DITHER_AREA_PATTERN_2_LEVEL:
-    DitherAreaPattern2Level(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
-    PartialUpdate(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
-    break;
-  case DITHER_MANUAL_2_PATTERN:
-    DitherArea(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT, 2, DITHER_PATTERN);
-    PartialUpdate(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
-    break;
-  case NO_DITHER:
-    PartialUpdate(ox, 0, k * SCREENWIDTH, k * SCREENHEIGHT);
-    break;
-  default:
-    I_Error("Unknown i_render_mode %d", i_render_mode);
-  }
+  pbdoom_draw(screens[0]);
 }
 
 
@@ -188,13 +154,7 @@ void I_ReadScreen (byte* scr)
 //
 void I_SetPalette (byte* palette)
 {
-  for (int i = 0; i < 256; i++) {
-    byte r = gammatable[usegamma][*palette++];
-    byte g = gammatable[usegamma][*palette++];
-    byte b = gammatable[usegamma][*palette++];
-
-    ink_palette[i] = (r << 16) | (g << 8) | b;
-  }
+  pbdoom_set_palette(palette);
 }
 
 
