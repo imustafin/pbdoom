@@ -44,3 +44,17 @@ To see the output from `pbdoom-get.app` have `mon.sh` running.
 Don't forget to update ip addresses and ports in all scripts.
 
 Check the ereader's ip in wifi settings for the connected network.
+
+### Releasing
+1. Choose the release version (e.g. `0.0.1`)
+2. Update the changelog
+    1. Change `[Unreleased]` title to the version (`[0.0.1]`)
+    2. Make a new `[Unreleased]` title with `### Added` and `### Fixed`
+    3. At the end of file, add link for the release (`[0.0.1] .../compare/v0.0.0...v0.0.1`)
+    4. Update the `[unreleased]` link (`[unreleased]: .../compare/v0.0.1...HEAD`)
+3. Push changelog updates to `main`
+4. Grab the artifact
+5. Make a GitHub release
+    1. Set the version, add `v` prefix (`v0.0.1`)
+    2. Paste changelog of the release, make headings start from `h1` (`#`),
+       remove `[]` around version
