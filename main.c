@@ -20,7 +20,7 @@ int new_argc;
 
 typedef enum {
   BTYPE_NORMAL,
-  BTYPE_RENDER,
+  BTYPE_MENU
 } btype_t;
 
 typedef struct {
@@ -34,7 +34,7 @@ typedef struct {
   int pressed;
 } button_t;
 
-#define BUTTONS_N 13
+#define BUTTONS_N 10
 button_t buttons[BUTTONS_N] = {
   {BTYPE_NORMAL, KEY_UPARROW, "↑"},
   {BTYPE_NORMAL, KEY_DOWNARROW, "↓"},
@@ -45,10 +45,7 @@ button_t buttons[BUTTONS_N] = {
   {BTYPE_NORMAL, 'n', "N"},
   {BTYPE_NORMAL, KEY_RCTRL, "CTRL"},
   {BTYPE_NORMAL, ' ', "␣"},
-  {BTYPE_RENDER, DYNAMIC_A2, "DynamicA2"},
-  {BTYPE_RENDER, DITHER_AREA_PATTERN_2_LEVEL, "DitherAreaPattern2Level"},
-  {BTYPE_RENDER, DITHER_MANUAL_2_PATTERN, "DitherArea(2, PATTERN)"},
-  {BTYPE_RENDER, NO_DITHER, "No Dither"}
+  {BTYPE_MENU, 0, "☰"}
 };
 
 void draw_buttons() {
@@ -60,6 +57,83 @@ void draw_buttons() {
     DrawRect(b->x, b->y, b->w, b->h, BLACK);
   }
 }
+
+void send_render_event(ink_render_mode mode) {
+  pbdoom_event e;
+  e.a = mode;
+  e.b = 0;
+  e.type = PBDOOM_EVENT_SWITCH_RENDER_MODE;
+  pbdoom_post_event(e);
+}
+
+void main_menu_handler(int i) {
+  printf("MAIN MENU %d\n", i);
+  switch (i) {
+  case -1:
+    main_menu = NULL;
+    break;
+  case 10:
+    send_render_event(DYNAMIC_A2);
+    main_menu = NULL;
+    break;
+  case 11:
+    send_render_event(DITHER_AREA_PATTERN_2_LEVEL);
+    main_menu = NULL;
+    break;
+  case 12:
+    send_render_event(DITHER_MANUAL_2_PATTERN);
+    main_menu = NULL;
+    break;
+  case 13:
+    send_render_event(NO_DITHER);
+    main_menu = NULL;
+    break;
+  }
+}
+
+imenu render_submenu[] = {
+  {
+    ITEM_ACTIVE,
+    10,
+    "DynamicA2"
+  },
+  {
+    ITEM_ACTIVE,
+    11,
+    "DitherAreaPattern2Level"
+  },
+  {
+    ITEM_ACTIVE,
+    12,
+    "DitherArea(2, PATTERN)"
+  },
+  {
+    ITEM_ACTIVE,
+    13,
+    "No Dither"
+  },
+  0
+};
+
+imenu main_menu_imenu[] = {
+  {
+    ITEM_SUBMENU,
+    1,
+    "Render",
+    render_submenu
+  },
+  0
+};
+
+
+void make_main_menu() {
+  icontext_menu *menu = CreateContextMenu("main_menu");
+  menu->hproc = main_menu_handler;
+  menu->menu = main_menu_imenu;
+
+  main_menu = menu;
+}
+
 
 void handle_buttons(int t, int index, int cnt) {
   if (t != EVT_MTSYNC) {
@@ -108,11 +182,11 @@ void handle_buttons(int t, int index, int cnt) {
       e.b = 0;
       if (b->btype == BTYPE_NORMAL) {
         e.type = pressed ? PBDOOM_EVENT_KEYDOWN : PBDOOM_EVENT_KEYUP;
-      } else if (b->btype == BTYPE_RENDER) {
-        if (!pressed) {
-          continue;
+      } else if (b->btype == BTYPE_MENU) {
+        if (pressed) {
+          make_main_menu();
+          OpenContextMenu(main_menu);
         }
-        e.type = PBDOOM_EVENT_SWITCH_RENDER_MODE;
       }
 
       pbdoom_post_event(e);
@@ -136,10 +210,7 @@ void compute_button_positions() {
   int i_n = 6;
   int i_ctrl = 7;
   int i_space = 8;
-  int i_a2 = 9;
-  int i_d1 = 10;
-  int i_d2 = 11;
-  int i_nd = 12;
+  int i_menu = 9;
 
   int ox = b / 2;
 
@@ -188,34 +259,29 @@ void compute_button_positions() {
   buttons[i_space].x = sw - ox - buttons[i_space].w;
   buttons[i_space].y = sh - (3 * b);
 
-  buttons[i_a2].w = 2 * b;
-  buttons[i_a2].h = b;
-  buttons[i_a2].x = ox - 1;
-  buttons[i_a2].y = sh - (7 * b);
+  buttons[i_menu].w = panel_height;
+  buttons[i_menu].h = panel_height;
+  buttons[i_menu].x = ScreenWidth() - panel_height;
+  buttons[i_menu].y = 0;
+}
 
-  buttons[i_d1].w = 2 * b;
-  buttons[i_d1].h = b;
-  buttons[i_d1].x = 2 * ox + (2 * b);
-  buttons[i_d1].y = sh - (7 * b);
+void draw_panel() {
+  DrawRect(0, 0, ScreenWidth(), panel_height, BLACK);
+  DrawRect(ScreenWidth() - panel_height, 0, panel_height, panel_height, BLACK);
+}
 
-  buttons[i_d2].w = 2 * b;
-  buttons[i_d2].h = b;
-  buttons[i_d2].x = 3 * ox + (4 * b);
-  buttons[i_d2].y = sh - (7 * b);
-
-  buttons[i_nd].w = 2 * b;
-  buttons[i_nd].h = b;
-  buttons[i_nd].x = 4 * ox + (6 * b);
-  buttons[i_nd].y = sh - (7 * b);
+void draw_gui() {
+  draw_buttons();
+  draw_panel();
 }
 
 void setup_app() {
+  SetPanelType(PANEL_DISABLED);
 
-  SetPanelType(PANEL_ENABLED);
   ClearScreen();
-  DrawPanel(NULL, "", "", 0);
+
   compute_button_positions();
-  draw_buttons();
+  draw_gui();
   FullUpdate();
 }
 
