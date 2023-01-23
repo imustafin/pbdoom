@@ -56,5 +56,6 @@ Check the ereader's ip in wifi settings for the connected network.
 4. Grab the artifact
 5. Make a GitHub release
     1. Set the version, add `v` prefix (`v0.0.1`)
-    2. Paste changelog of the release, make headings start from `h1` (`#`),
-       remove `[]` around version
+    2. Paste changelog of the release
+        * Don't add the release title (already shown by GitHub)
+        * Make headings (Added, Fixed) start from `h1` (`#`)
