@@ -26,7 +26,12 @@
 
 #ifndef __BYTEBOOL__
 #define __BYTEBOOL__
-typedef enum { false, true } boolean;
+// bool and boolean as in https://github.com/id-Software/DOOM-IOS2/blob/master/common/prboom/doomtype.h#L43
+// { true, false } bool - from stdbool
+#include <stdbool.h>
+// boolean is an int
+typedef int boolean;
+
 typedef unsigned char byte;
 #endif
 
