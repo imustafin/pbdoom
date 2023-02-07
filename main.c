@@ -10,6 +10,31 @@
 
 ifont *button_font;
 
+/// dp and DPI
+int dpi = 0;
+double dp;
+
+// Mappings collected from various device listings on websites
+// also consult
+// https://github.com/koreader/koreader/blob/master/frontend/device/pocketbook/device.lua
+void set_dpi() {
+  char *s = GetDeviceModel();
+
+  // default fallback
+  dpi = 212;
+
+  if (!strcmp(s, "PB1040")) { // PocketBook InkPad X (1040)
+    dpi = 227;
+  } else if(!strcmp(s, "PB632")) { // PocketBook Touch HD Plus / Touch HD 3 (632)
+    dpi = 300;
+  }
+
+  // like Android's dp
+  dp = (double) dpi / 160;
+}
+
+/// Other
+
 void set_font() {
   if (!button_font) {
     button_font = OpenFont("LiberationSans", 30, 0);
@@ -218,7 +243,7 @@ void compute_button_positions() {
   int sh = ScreenHeight();
   printf("SW %d, SH %d\n", sw, sh);
 
-  int b = (sw < sh ? sw : sh) / 15;
+  int b = 70 * dp;
 
   int i_up = 0;
   int i_down = 1;
@@ -231,7 +256,7 @@ void compute_button_positions() {
   int i_space = 8;
   int i_menu = 9;
 
-  int ox = b / 2;
+  int ox = b;
 
   buttons[i_up].x = ox + b - 1;
   buttons[i_up].y = sh - (5 * b);
@@ -330,12 +355,16 @@ static int main_handler(int event_type, int a, int b)
 }
 
 
+
 int main (int argc, char* argv[])
 {
   new_argc = argc;
   new_argv = argv;
 
+  set_dpi();
+
   InkViewMain(main_handler);
+
 
   return 0;
 }
