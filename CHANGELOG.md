@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Use dpi (dp) for computing button sizes [#2](https://github.com/imustafin/pbdoom/issues/2)
+- Add vertical margins for game display (refactor display elements into frames)
 
 ### Fixed
 

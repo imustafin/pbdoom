@@ -33,6 +33,12 @@ add_executable(game.app
   events.c
   pbdoom/render.h
   pbdoom/render.c
+  pbdoom/frames/game.h
+  pbdoom/frames/game.c
+  pbdoom/frames/keyboard.h
+  pbdoom/frames/keyboard.c
+  pbdoom/frames/panel.h
+  pbdoom/frames/panel.c
 
 
 sdldoom-1.10/am_map.c
