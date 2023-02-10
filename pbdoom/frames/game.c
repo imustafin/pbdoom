@@ -1,3 +1,5 @@
+#include <math.h>
+
 #include "game.h"
 #include "panel.h"
 
@@ -16,7 +18,15 @@ void game_frame_uninstall() {
 }
 
 ink_render_mode i_render_mode = DYNAMIC_A2;
-int ink_palette[256];
+
+// All <r, g, b> in [0, 1]
+typedef struct {
+  int r;
+  int g;
+  int b;
+} rgb;
+
+rgb ink_palette[256];
 
 void game_frame_set_render_mode(ink_render_mode x) {
   i_render_mode = x;
@@ -24,12 +34,37 @@ void game_frame_set_render_mode(ink_render_mode x) {
 
 void game_frame_set_palette(byte *palette) {
   for (int i = 0; i < 256; i++) {
-    byte r = gammatable[usegamma][*palette++];
-    byte g = gammatable[usegamma][*palette++];
-    byte b = gammatable[usegamma][*palette++];
-
-    ink_palette[i] = (r << 16) | (g << 8) | b;
+    ink_palette[i].r = gammatable[usegamma][*palette++];
+    ink_palette[i].g = gammatable[usegamma][*palette++];
+    ink_palette[i].b = gammatable[usegamma][*palette++];
   }
+}
+
+double game_alpha = 1;
+double game_beta = 0;
+double game_gamma = 1;
+
+int adjust(double c) {
+  double linear = c * game_alpha + game_beta;
+  int x = pow(linear / 255, game_gamma) * 255;
+
+  if (x < 0) {
+    return 0;
+  }
+  if (x > 255) {
+    return 255;
+  }
+  return x;
+}
+
+int adjusted_color(int idx) {
+  rgb c = ink_palette[idx];
+
+  int r = adjust(c.r);
+  int g = adjust(c.g);
+  int b = adjust(c.b);
+
+  return (r << 16) | (g << 8) | b;
 }
 
 static void draw() {
@@ -54,7 +89,7 @@ void game_frame_draw_screen(unsigned char *screen) {
       FillArea(game_frame.x + mx + j * k,
                game_frame.y + my + i * k,
                k, k,
-               ink_palette[line[j]]);
+               adjusted_color(line[j]));
     }
 
     line += SCREENWIDTH;

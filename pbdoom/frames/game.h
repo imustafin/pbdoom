@@ -15,10 +15,12 @@ typedef enum {
 } ink_render_mode;
 extern ink_render_mode i_render_mode;
 
-extern int ink_palette[256];
-
 void game_frame_set_render_mode(ink_render_mode i_render_mode);
 void game_frame_set_palette(byte *palette);
 void game_frame_draw_screen(unsigned char *screen);
+
+extern double game_alpha;
+extern double game_beta;
+extern double game_gamma;
 
 #endif /* PBDOOM_FRAMES_GAME_H */

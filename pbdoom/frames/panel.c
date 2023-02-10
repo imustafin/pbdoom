@@ -2,28 +2,41 @@
 #include "version.h"
 #include "../render.h"
 #include "../../events.h"
+#include "../gui.h"
 
 icontext_menu *main_menu;
+
+enum {
+  idx_render = 1,
+  idx_render_dynamic_a2,
+  idx_render_dither_area_pattern_2_level,
+  idx_render_dither_area_2,
+  idx_render_no_dither,
+
+  idx_color,
+
+  idx_about
+} menu_idx;
 
 imenu render_submenu[] = {
   {
     ITEM_ACTIVE,
-    10,
+    idx_render_dynamic_a2,
     "DynamicA2"
   },
   {
     ITEM_ACTIVE,
-    11,
+    idx_render_dither_area_pattern_2_level,
     "DitherAreaPattern2Level"
   },
   {
     ITEM_ACTIVE,
-    12,
+    idx_render_dither_area_2,
     "DitherArea(2, PATTERN)"
   },
   {
     ITEM_ACTIVE,
-    13,
+    idx_render_no_dither,
     "No Dither"
   },
   0
@@ -32,17 +45,23 @@ imenu render_submenu[] = {
 imenu main_menu_imenu[] = {
   {
     ITEM_SUBMENU,
-    1,
+    idx_render,
     "Render",
     render_submenu
   },
   {
     ITEM_ACTIVE,
-    2,
+    idx_color,
+    "Color Settings"
+  },
+  {
+    ITEM_ACTIVE,
+    idx_about,
     "About"
   },
   0
 };
+
 void send_render_event(ink_render_mode mode) {
   pbdoom_event e;
   e.a = mode;
@@ -51,12 +70,16 @@ void send_render_event(ink_render_mode mode) {
   pbdoom_post_event(e);
 }
 
+static void open_color_settings() {
+  gui_open_color_settings();
+}
+
 void main_menu_handler(int i) {
   switch (i) {
   case -1:
     main_menu = NULL;
     break;
-  case 2:
+  case idx_about:
     main_menu = NULL;
     Dialog(
            0,
@@ -69,20 +92,24 @@ void main_menu_handler(int i) {
            "Ok", NULL, NULL
            );
     break;
-  case 10:
+  case idx_render_dynamic_a2:
     send_render_event(DYNAMIC_A2);
     main_menu = NULL;
     break;
-  case 11:
+  case idx_render_dither_area_pattern_2_level:
     send_render_event(DITHER_AREA_PATTERN_2_LEVEL);
     main_menu = NULL;
     break;
-  case 12:
+  case idx_render_dither_area_2:
     send_render_event(DITHER_MANUAL_2_PATTERN);
     main_menu = NULL;
     break;
-  case 13:
+  case idx_render_no_dither:
     send_render_event(NO_DITHER);
+    main_menu = NULL;
+    break;
+  case idx_color:
+    open_color_settings();
     main_menu = NULL;
     break;
   }
