@@ -1,9 +1,12 @@
+#include "inkview.h"
+
 #include "gui.h"
 #include "render.h"
 
 #include "frames/game.h"
 #include "frames/keyboard.h"
 #include "frames/panel.h"
+#include "frames/color_settings.h"
 
 int dpi = 0;
 
@@ -26,6 +29,20 @@ void set_dpi() {
   dp = (double) dpi / 160;
 }
 
+int controls_h() {
+  return 400 * dp;
+}
+
+frame *controls_frame;
+void switch_controls_frame(frame *new_frame) {
+  if (controls_frame) {
+    controls_frame->uninstall();
+  }
+  int ch = 400 * dp;
+  controls_frame = new_frame;
+  controls_frame->install(0, ScreenHeight() - ch, ScreenWidth(), ch);
+}
+
 void install_frames() {
   int sw = ScreenWidth();
   int sh = ScreenHeight();
@@ -35,9 +52,7 @@ void install_frames() {
   panel_frame.install(0, 0, sw, 60 * dp);
   h -= panel_frame.h;
 
-
-  int kh = 400 * dp;
-  keyboard_frame.install(0, sh - kh, sw, kh);
+  switch_controls_frame(&keyboard_frame);
   h -= keyboard_frame.h;
 
   game_frame.install(0, panel_frame.h, sw, h);
@@ -46,7 +61,10 @@ void install_frames() {
 void draw_frames() {
   panel_frame.draw();
   game_frame.draw();
-  keyboard_frame.draw();
+
+  if (controls_frame) {
+    controls_frame->draw();
+  }
 }
 
 void gui_init() {
@@ -55,7 +73,27 @@ void gui_init() {
   draw_frames();
 }
 
+void redraw_frame(frame *f) {
+  int x = f->x;
+  int y = f->y;
+  int w = f->w;
+  int h = f->h;
+  FillArea(x, y, w, h, WHITE);
+  f->draw();
+  PartialUpdate(x, y, w, h);
+}
+
+void gui_open_color_settings() {
+  switch_controls_frame(&color_settings_frame);
+  redraw_frame(controls_frame);
+}
+
+void gui_open_keyboard() {
+  switch_controls_frame(&keyboard_frame);
+  redraw_frame(controls_frame);
+}
+
 int gui_handle(int t, int a, int b) {
-  return keyboard_frame.handle(t, a, b)
+  return (controls_frame && controls_frame->handle(t, a, b))
     || panel_frame.handle(t, a, b);
 }

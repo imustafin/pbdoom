@@ -39,6 +39,8 @@ add_executable(game.app
   pbdoom/frames/keyboard.c
   pbdoom/frames/panel.h
   pbdoom/frames/panel.c
+  pbdoom/frames/color_settings.h
+  pbdoom/frames/color_settings.c
 
 
 sdldoom-1.10/am_map.c
