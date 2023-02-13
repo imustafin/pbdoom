@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Fixed
+
+## [v0.0.3]
+
+### Added
+
 - DPI (dp) button sizes for uniform sizing across devices [#2](https://github.com/imustafin/pbdoom/issues/2)
 - Added vertical margins for game display (refactor display elements into frames)
 - Added color settings menu
@@ -34,6 +40,7 @@ with downloads available from the [releases](https://github.com/imustafin/pbdoom
 page
 - Control buttons placement is computed based on screen dimensions [#1](https://github.com/imustafin/pbdoom/issues/1)
 
-[unreleased]: https://github.com/imustafin/pbdoom/compare/v0.0.2...HEAD
+[unreleased]: https://github.com/imustafin/pbdoom/compare/v0.0.3...HEAD
+[v0.0.3]: https://github.com/imustafin/pbdoom/compare/v0.0.2...v0.0.3
 [v0.0.2]: https://github.com/imustafin/pbdoom/compare/v0.0.1...v0.0.2
 [v0.0.1]: https://github.com/imustafin/pbdoom/releases/tag/v0.0.1
