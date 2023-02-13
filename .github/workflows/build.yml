@@ -49,7 +49,7 @@ jobs:
 
           cd $PBDOOM_PATH
           echo "../$SDK_DOWNLOAD_PATH/$SDK_VARIANT" > sdk_path
-          ./build.sh
+          CMAKE_BUILD_TYPE=Release ./build.sh
           cd ..
 
           mkdir -p artifacts/applications/pbdoom
