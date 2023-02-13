@@ -56,6 +56,8 @@ void M_StartControlPanel (void);
 
 
 
+extern boolean messageNeedsInput;
+extern int messageToPrint;
 
 
 

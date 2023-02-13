@@ -2,9 +2,12 @@
 
 #include "game.h"
 #include "panel.h"
+#include "keyboard.h"
 
 #include "../../sdldoom-1.10/v_video.h"
 #include "../../sdldoom-1.10/i_system.h"
+#include "../../sdldoom-1.10/doomstat.h"
+#include "../../sdldoom-1.10/m_menu.h"
 
 void game_frame_install(int x, int y, int w, int h) {
   game_frame.x = x;
@@ -71,10 +74,22 @@ static void draw() {
   // do nothing, real draws come through game_frame_draw_screen
 }
 
+void update_keyboard_mode() {
+  if (menuactive) {
+    if (messageToPrint && messageNeedsInput) {
+      set_keyboard_mode(keyboard_mode_message_input);
+    } else {
+      set_keyboard_mode(keyboard_mode_menu);
+    }
+  } else {
+    set_keyboard_mode(keyboard_mode_level);
+  }
+}
 void game_frame_draw_screen(unsigned char *screen) {
   if (main_menu) {
     return;
   }
+  update_keyboard_mode();
 
   int by_w = game_frame.w / SCREENWIDTH;
   int by_h = game_frame.h / SCREENHEIGHT;
