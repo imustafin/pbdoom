@@ -15,12 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- DPI (dp) button sizes for uniform sizing across devices [#2](https://github.com/imustafin/pbdoom/issues/2)
+- DPI (dp) button sizes for uniform sizing across devices [#3](https://github.com/imustafin/pbdoom/issues/3)
 - Added vertical margins for game display (refactor display elements into frames)
 - Added color settings menu
-- Only buttons useable on the current screen are shown
-
-### Fixed
+- Only buttons usable on the current screen are shown
 
 ## [v0.0.2]
 Small release to check the release process
