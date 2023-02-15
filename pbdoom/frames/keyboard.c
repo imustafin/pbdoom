@@ -25,6 +25,13 @@ enum {
   button_n,
   button_ctrl,
   button_space,
+  button_one,
+  button_two,
+  button_three,
+  button_four,
+  button_five,
+  button_six,
+  button_seven,
   BUTTONS_N
 } button_i;
 
@@ -41,18 +48,32 @@ button_t buttons[BUTTONS_N] = {
   {'n', "N", keyboard_mode_message_input},
   {KEY_RCTRL, "CTRL", keyboard_mode_level},
   {' ', "␣", keyboard_mode_level},
+  {'1', "1", keyboard_mode_level},
+  {'2', "2", keyboard_mode_level},
+  {'3', "3", keyboard_mode_level},
+  {'4', "4", keyboard_mode_level},
+  {'5', "5", keyboard_mode_level},
+  {'6', "6", keyboard_mode_level},
+  {'7', "7", keyboard_mode_level},
 };
 
 void compute_button_positions() {
-  int sw = ScreenWidth();
-  int sh = ScreenHeight();
+  int sw = keyboard_frame.w;
 
-  int b = 70 * dp;
-
-  int ox = b;
+  int b;
+  int ox;
+  if (gui_size > size_m) {
+    b = 70 * dp;
+    ox = b;
+  } else {
+    b = 60 * dp;
+    ox = 5 * dp;
+  }
 
   // content height is 3 buttons
   int ch = 3 * b;
+
+  // buttons valign middle
   int ym = (keyboard_frame.h - ch) / 2;
   int y = keyboard_frame.y;
 
@@ -62,17 +83,17 @@ void compute_button_positions() {
   buttons[button_up].h = b;
 
   buttons[button_left].x = ox + 0;
-  buttons[button_left].y = y + ym + b;
+  buttons[button_left].y = y + ym + b - 1;
   buttons[button_left].w = b;
   buttons[button_left].h = b;
 
   buttons[button_right].x = ox + (2 * b) - 2;
-  buttons[button_right].y = y + ym + b;
+  buttons[button_right].y = y + ym + b - 1;
   buttons[button_right].w = b;
   buttons[button_right].h = b;
 
   buttons[button_down].x = ox + b - 1;
-  buttons[button_down].y = y + ym + 2 * b;
+  buttons[button_down].y = y + ym + 2 * b - 2;
   buttons[button_down].w = b;
   buttons[button_down].h = b;
 
@@ -99,7 +120,30 @@ void compute_button_positions() {
   buttons[button_space].w = 3 * b;
   buttons[button_space].h = b;
   buttons[button_space].x = sw - ox - buttons[button_space].w;
-  buttons[button_space].y = y + ym + 2 * b;
+  buttons[button_space].y = y + ym + 2 * b - 1;
+
+  int nb;
+  if (gui_size > size_m) {
+    nb = 60 * dp;
+  } else {
+    nb = 48 * dp;
+  }
+  int cwb = 3 * nb - 2;
+  int chb = 3 * nb - 2;
+  int wb = buttons[button_ctrl].x - (buttons[button_right].x + b);
+  int onx = buttons[button_right].x + buttons[button_right].w + (wb - cwb) / 2;
+  int ony = y + (keyboard_frame.h - chb) / 2;
+  int hb = sw;
+  for(button_t *n = buttons + button_two; n <= buttons + button_seven; n++) {
+    n->w = nb;
+    n->h = nb;
+    n->x = onx + ((n - buttons - button_two) % 3) * (nb - 1);
+    n->y = ony + ((n - buttons - button_two) / 3) * (nb - 1);
+  }
+  buttons[button_one].w = nb;
+  buttons[button_one].h = nb;
+  buttons[button_one].x = onx + 1 * (nb - 1);
+  buttons[button_one].y = ony + 2 * (nb - 1);
 }
 
 void keyboard_frame_install(int x, int y, int w, int h) {
