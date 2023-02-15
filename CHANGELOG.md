@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - New website: https://pbdoom.imustafin.tatar
+- Special optimized layout for 6" devices [#4](https://github.com/imustafin/pbdoom/issues/4)
+- Digit buttons for weapon switching
+- Bullet near the current render mode in menu
 
 ### Fixed
 

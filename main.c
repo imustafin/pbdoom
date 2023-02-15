@@ -17,7 +17,11 @@ void setup_app() {
 
   ClearScreen();
 
-  gui_init();
+  /* int sw = 1072, sh = 1448, dpi = 300; // Touch HD 3 (632) */
+  int sw = 0, sh = 0, dpi = 0; // default (use current screen settings)
+
+  gui_init(sw, sh, dpi);
+
   FullUpdate();
 }
 

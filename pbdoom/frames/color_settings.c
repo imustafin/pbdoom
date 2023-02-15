@@ -87,7 +87,7 @@ void update_value_from_screen(value *v, int x) {
   *(v->val) = val;
 }
 
-const int V_S = 50; // height of value element in dps
+const int V_S = 48; // height of value element in dps
 
 // v->x and v->y should be set
 void install_value(value *v) {
@@ -97,15 +97,17 @@ void install_value(value *v) {
   int s = V_S * dp;
   v->s = s;
 
-  int ww = v->w;
 
   v->nx = v->x + m;
   v->ny = v->y;
-  v->nw = 125 * dp;
+  if (gui_size > size_m) {
+    v->nw = 120 * dp;
+  } else {
+    v->nw = 90 * dp;
+  }
   v->nh = s;
 
-  v->gx = v->nx + v->nw + m + m + s / 2;
-  ww -= v->nw + m + m + m + s;
+  int space_after_name = s / 2;
 
   // from right to left
   int xx = v->x + v->w;
@@ -115,22 +117,20 @@ void install_value(value *v) {
   v->th = s;
 
   xx -= v->tw + m;
-  ww -= v->tw + m;
 
   v->mx = xx - s;
   v->my = v->y;
 
   xx -= s + m;
-  ww -= s + m;
 
   v->px = xx - s;
   v->py = v->y;
 
-  ww -= s + 2 * m;
-
   int gg = 2 * dp; // gauge line thickness
   int gp = (s - gg) / 2; // gauge line padding
-  v->gw = ww;
+  int gw = v->px - (v->nx + v->nw) - s - m; // s is two half buttons on the sides
+  v->gw = gw;
+  v->gx = v->nx + v->nw + s / 2;
   v->gy = v->y + gp;
   v->gh = gg;
 
@@ -162,7 +162,12 @@ static void install(int a_x, int a_y, int a_w, int a_h) {
   color_settings_frame.w = w;
   color_settings_frame.h = h;
 
-  int bh = 100 * dp;
+  int bh;
+  if (gui_size > size_m) {
+    bh = 100 * dp;
+  } else {
+    bh = 48 * dp;
+  }
 
   cx = x;
   cw = w / 3;
@@ -347,6 +352,10 @@ static int handle(int t, int a, int b) {
   boolean handled = handle_value_drag(values + I_ALPHA, t, a, b) ||
     handle_value_drag(values + I_BETA, t, a, b) ||
     handle_value_drag(values + I_GAMMA, t, a, b);
+
+  if (handled) {
+    return true;
+  }
 
   if (t == EVT_POINTERUP) {
     if (a >= okx && a <= okx + okw && b >= oky && b <= oky + okh) {

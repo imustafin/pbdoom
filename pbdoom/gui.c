@@ -13,24 +13,50 @@ int dpi = 0;
 // Mappings collected from various device listings on websites
 // also consult
 // https://github.com/koreader/koreader/blob/master/frontend/device/pocketbook/device.lua
-void set_dpi() {
-  char *s = GetDeviceModel();
+void set_dpi(int gdpi) {
+  if (gdpi > 0) {
+    dpi = gdpi;
+  } else {
+    char *s = GetDeviceModel();
 
-  // default fallback
-  dpi = 212;
+    // default fallback
+    dpi = 212;
 
-  if (!strcmp(s, "PB1040")) { // PocketBook InkPad X (1040)
-    dpi = 227;
-  } else if(!strcmp(s, "PB632")) { // PocketBook Touch HD Plus / Touch HD 3 (632)
-    dpi = 300;
+    if (!strcmp(s, "PB1040")) { // PocketBook InkPad X (1040)
+      dpi = 227;
+    } else if(!strcmp(s, "PB632")) { // PocketBook Touch HD Plus / Touch HD 3 (632)
+      dpi = 300;
+    }
   }
 
   // like Android's dp
   dp = (double) dpi / 160;
 }
 
+int gui_w, gui_h;
+gui_size_t gui_size;
+
+// screen diagonal in inches
+void set_gui_size() {
+  double h = gui_h / dpi;
+  double w = gui_w / dpi;
+
+  // screen diagonal in inches, squared
+  double dsq = h * h + w * w;
+
+  if (dsq <= (10 * 10) - 0.9) {
+    gui_size = size_m;
+  } else {
+    gui_size = size_l;
+  }
+}
+
 int controls_h() {
-  return 400 * dp;
+  if (gui_size > size_m) {
+    return 400 * dp;
+  } else {
+    return 250 * dp;
+  }
 }
 
 frame *controls_frame;
@@ -38,18 +64,30 @@ void switch_controls_frame(frame *new_frame) {
   if (controls_frame) {
     controls_frame->uninstall();
   }
-  int ch = 400 * dp;
+
+  int ch;
+  if (gui_size > size_m) {
+    ch = 400 * dp;
+  } else {
+    ch = 250 * dp;
+  }
   controls_frame = new_frame;
-  controls_frame->install(0, ScreenHeight() - ch, ScreenWidth(), ch);
+  controls_frame->install(0, gui_h - ch, gui_w, ch);
 }
 
 void install_frames() {
-  int sw = ScreenWidth();
-  int sh = ScreenHeight();
+  int sw = gui_w;
+  int sh = gui_h;
 
-  int h = ScreenHeight();
+  int h = gui_h;
 
-  panel_frame.install(0, 0, sw, 60 * dp);
+  int ph;
+  if (gui_size > size_m) {
+    ph = 60 * dp;
+  } else {
+    ph = 48 * dp;
+  }
+  panel_frame.install(0, 0, sw, ph);
   h -= panel_frame.h;
 
   switch_controls_frame(&keyboard_frame);
@@ -67,8 +105,12 @@ void draw_frames() {
   }
 }
 
-void gui_init() {
-  set_dpi();
+// pass -1 for default
+void gui_init(int gw, int gh, int gdpi) {
+  set_dpi(gdpi);
+  gui_w = gw > 0 ? gw : ScreenWidth();
+  gui_h = gh > 0 ? gh : ScreenHeight();
+  set_gui_size();
   install_frames();
   draw_frames();
 }
