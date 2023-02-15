@@ -120,6 +120,29 @@ void make_main_menu() {
   menu->hproc = main_menu_handler;
   menu->menu = main_menu_imenu;
 
+  int active_idx;
+  switch (i_render_mode) {
+  case DYNAMIC_A2:
+    active_idx = idx_render_dynamic_a2;
+    break;
+  case DITHER_AREA_PATTERN_2_LEVEL:
+    active_idx = idx_render_dither_area_pattern_2_level;
+    break;
+  case DITHER_MANUAL_2_PATTERN:
+    active_idx = idx_render_dither_area_2;
+    break;
+  case NO_DITHER:
+    active_idx = idx_render_no_dither;
+    break;
+  }
+  for (imenu *i = render_submenu; i->type; i++) {
+    if (i->index == active_idx) {
+      i->type = ITEM_BULLET;
+    } else {
+      i->type = ITEM_ACTIVE;
+    }
+  }
+
   main_menu = menu;
 }
 
