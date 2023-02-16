@@ -1,0 +1,43 @@
+name: Update to gh-pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  github-pages:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: cd
+        run: |
+          mv pages /tmp/pages
+          rm -rf *
+          mv /tmp/pages/* .
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+
+      - name: yarn install
+        run: |
+          yarn install --frozen-lockfile
+
+      - name: Build site
+        uses: limjh16/jekyll-action-ts@v2
+        with:
+          enable_cache: true
+          format_output: true
+
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site

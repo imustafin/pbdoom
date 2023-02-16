@@ -83,8 +83,8 @@ void main_menu_handler(int i) {
     main_menu = NULL;
     Dialog(
            0,
-           "About pbdoom",
-           "Pbdoom " GIT_TAG "\n"
+           "About PBDoom",
+           "PBDoom " GIT_TAG "\n"
            "by Ilgiz Mustafin, based on SDL Doom by Sam Lantinga\n"
            "Get the Source code and other info at \n"
            "https://github.com/imustafin/pbdoom"
@@ -164,7 +164,7 @@ void panel_frame_draw() {
   set_title_font();
   DrawTextRect(panel_frame.x, panel_frame.y,
                panel_frame.w, panel_frame.h,
-               "pbdoom " GIT_TAG,
+               "PBDoom " GIT_TAG,
                ALIGN_CENTER | VALIGN_MIDDLE
                );
 
