@@ -3,7 +3,7 @@ name: Update to gh-pages
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   github-pages:
@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: cd
+      - name: Keep only pages dir
         run: |
           mv pages /tmp/pages
           rm -rf *
@@ -20,6 +20,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.0'
+          bundler-cache: 'true'
 
       - uses: actions/setup-node@v3
         with:
@@ -29,12 +30,15 @@ jobs:
         run: |
           yarn install --frozen-lockfile
 
+      - name: Refresh releases
+        run: |
+          bundle exec rake releases
+
       - name: Build site
         uses: limjh16/jekyll-action-ts@v2
         with:
           enable_cache: true
           format_output: true
-
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

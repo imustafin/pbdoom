@@ -1,0 +1,67 @@
+---
+layout: default
+---
+<div class="w-[1000px] mx-auto">
+<h1 class="text-4xl font-bold text-center w-full mb-6 mt-4">Downloads</h1>
+
+{% assign r = site.data.releases | first %}
+<div class="w-full bg-white shadow p-4">
+  <div class="flex flex-row w-full">
+    <div class="grow">
+      <h2 class="text-2xl font-bold">Latest release: {{ r.name }}</h2>
+      Published on {{ r.published_at }} <br>
+    </div>
+    <div>
+      {% capture latest_b %}
+        Download<br>PBDoom&nbsp;{{ r.name }}
+      {% endcapture %}
+
+      {% include button.html
+        icon="heroicons/solid/document_arrow_down.svg"
+        text=latest_b
+        href=r.download_url
+      %}
+    </div>
+  </div>
+  <div class="prose">
+    {{ r.body | markdownify }}
+  </div>
+</div>
+
+
+<h2 class="text-2xl font-bold mt-4 mb-2">Older releases</h2>
+<table class="w-full shadow mb-6">
+  <thead>
+  </thead>
+  <tbody>
+    {% for r in site.data.releases offset:1 %}
+      {% assign mod = forloop.index | modulo: 2 %}
+      {% if mod == 0 %}
+        {% assign color = "bg-sky-50" %}
+      {% else %}
+        {% assign color = "bg-white" %}
+      {% endif %}
+      <tr class="{{ color }} flex w-full justify-between px-4 pt-4 items-center">
+        <td class="font-bold">{{ r.name }}</td>
+        <td>{{ r.published_at }}</td>
+        <td rowspan=1>
+          {% include button.html
+            icon="heroicons/solid/document_arrow_down.svg"
+            text="Download"
+            class="ml-auto"
+            href=r.download_url
+          %}
+        </td>
+      </tr>
+      <tr class="{{ color }}">
+        <td colspan=3 class="px-4">
+          <details>
+            <summary class="pb-4">Changes</summary>
+            <section class="prose">{{ r.body | markdownify }}</section>
+          </details>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>

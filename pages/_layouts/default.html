@@ -3,9 +3,10 @@ layout: html
 ---
 <body class="bg-sky-100 flex flex-col min-h-screen">
   <header
-    class="w-full bg-sky-700 text-gray-50 shadow p-4 flex justify-between"
+    class="w-full bg-sky-700 text-gray-50 shadow p-4 flex font-bold"
   >
-    <a href="{{ '/' | relative_url }}" class="font-bold">PBDoom</a>
+    <a href="{{ '/' | relative_url }}" class="font-extrabold ml-2 mr-6">PBDoom</a>
+    <a href="{{ '/downloads' | relative_url }}">Downloads</a>
   </header>
   <main class="grow">
     {{ content }}

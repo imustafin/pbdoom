@@ -1,0 +1,11 @@
+<a
+  class="px-5 py-2.5 text-base font-bold text-center text-white bg-sky-600 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 inline-flex items-center {{ include.class }}"
+  href="{{ include.href }}"
+>
+  {% if include.icon %}
+    <span class="mr-2">
+      {% include {{ include.icon }} %}
+    </span>
+  {% endif %}
+  {{ include.text }}
+</a>
