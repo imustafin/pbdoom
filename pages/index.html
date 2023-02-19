@@ -20,30 +20,35 @@ layout: default
       text=bc
       class="w-full h-20 justify-center text-xl"
     %}<br>
-    <a
-      href="{{ '/installation' | relative_url }}"
-      class="{{ site.link_class }}"
-    >
-      How to install
+    <div class="w-full text-center mt-2">
+      <a
+        href="{{ '/installation' | relative_url }}"
+        class="{{ site.link_class }}"
+      >
+        How to install
+      </a>
+    </div>
+    <h2 class="{{ site.link_class }} font-bold text-4xl font-bold mt-4 mb-4">News</h2>
+    <div class="space-y-4 mb-2">
+      {% for post in site.posts limit: 2%}
+        <div class="bg-white shadow p-5">
+          <div class="{{ site.prose_class_unsized }} prose-base">
+            <h1 class="mb-0">
+              <a href="{{ post.url }}">{{ post.title }}</a>
+            </h1>
+            <span>Published on: {{ post.date | date: "%e %B %Y" }}</span>
+            {{ post.excerpt | markdownify }}
+            <a href="{{ post.url }}">Read more…</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <a href="{{ '/posts' | relative_url }}" class="{{ site.link_class }} text-2xl mt-2">
+      Read older posts…
     </a>
-    <h2 class="text-2xl font-bold mt-2 mb-1">Device compatibility</h2>
-    <p>
-      PBDoom is known to be running on:
-      <ul class="list-disc">
-        <li>PocketBook X</li>
-        <li>PocketBook Touch HD 3</li>
-      </ul>
-    <h2 class="text-2xl font-bold mt-2 mb-1">Source code and contacts</h2>
-    <p>
-      All source code, issues, feature requests are in our GitHub project: <br>
-      {% include button.html
-        icon="github_icon.svg"
-        text="PBDoom on GitHub"
-        href="https://github.com/imustafin/pbdoom/"
-      %}
-    </p>
   </div>
   <div class="w-1/2 px-16" id="default-carousel" data-carousel="slide">
+
     <!-- dark for flowbite carousel indicators being hardcoded with inverse colors -->
     <div class="dark mx-auto relative w-full h-[600px] shadow bg-white flex flex-col">
       <div class="flex flex-col relative overflow-hidden h-full w-full">
@@ -88,5 +93,21 @@ layout: default
         </button>
       </div>
     </div>
+    <h2 class="text-2xl font-bold mt-2 mb-1">Device compatibility</h2>
+    <p>
+      PBDoom is known to be running on:
+      <ul class="list-disc list-inside">
+        <li>PocketBook X</li>
+        <li>PocketBook Touch HD 3</li>
+      </ul>
+      <h2 class="text-2xl font-bold mt-2 mb-1">Source code and contacts</h2>
+      <p>
+        All source code, issues, feature requests are in our GitHub project: <br>
+        {% include button.html
+        icon="github_icon.svg"
+        text="PBDoom on GitHub"
+        href="https://github.com/imustafin/pbdoom/"
+        %}
+      </p>
   </div>
 </div>

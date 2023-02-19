@@ -1,0 +1,8 @@
+{%- assign release = site.data.releases | where: "name", include.name | first -%}
+{%- assign text = "Download PBDoom (" | append: release.name | append: ")" %}
+<span class="not-prose">{% include button.html
+  icon="heroicons/solid/document_arrow_down.svg"
+  text=text
+  class="ml-auto"
+  href=include.release.download_url
+%}</span>
