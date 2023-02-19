@@ -7,6 +7,7 @@ module.exports = {
     './_posts/*.md',
     './*.md',
     './*.html',
+    '_config.yml',
     './node_modules/flowbite/**/*.js'
   ],
   theme: {

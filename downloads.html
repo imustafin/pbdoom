@@ -6,29 +6,28 @@
     <script src="/js/flowbite.min.js"></script>
   </head>
   <body class="bg-sky-100 flex flex-col min-h-screen">
-    <header class="w-full bg-sky-700 text-gray-50 shadow p-4 flex font-bold">
-      <a href="/" class="font-extrabold ml-2 mr-6">PBDoom</a>
+    <header
+      class="w-full bg-sky-700 text-gray-50 shadow p-4 flex space-x-4 text-xl"
+    >
+      <a href="/" class="font-bold ml-2 mr-2">PBDoom</a>
       <a href="/downloads">Downloads</a>
+      <a href="/installation">Installation</a>
     </header>
     <main class="grow">
+      <h1 class="text-4xl font-bold text-center w-full mb-6 mt-4">Downloads</h1>
       <div class="w-[1000px] mx-auto">
-        <h1 class="text-4xl font-bold text-center w-full mb-6 mt-4">
-          Downloads
-        </h1>
-
         <div class="w-full bg-white shadow p-4">
           <div class="flex flex-row w-full">
             <div class="grow">
               <h2 class="text-2xl font-bold">Latest release: v0.0.3</h2>
               Published on 2023-02-13 <br />
             </div>
-            <div>
+            <div class="text-center">
               <a
-                class="px-5 py-2.5 text-base font-bold text-center text-white bg-sky-600 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 inline-flex items-center"
+                class="px-5 py-2.5 text-base font-bold text-center text-white bg-sky-600 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 inline-flex items-center no-underline"
                 href="https://github.com/imustafin/pbdoom/releases/download/v0.0.3/applications.zip"
-              >
-                <span class="mr-2">
-                  <svg
+                ><span class="mr-2"
+                  ><svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
@@ -44,12 +43,20 @@
                     />
                   </svg>
                 </span>
-
                 Download<br />PBDoom&nbsp;v0.0.3
+              </a>
+              <br />
+              <a
+                href="/installation"
+                class="text-[#111827] underline font-medium text-lg"
+              >
+                How to install
               </a>
             </div>
           </div>
-          <div class="prose">
+          <div
+            class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden"
+          >
             <h3 id="added">Added</h3>
 
             <ul>
@@ -76,13 +83,12 @@
             >
               <td class="font-bold">v0.0.2</td>
               <td>2023-01-23</td>
-              <td rowspan="1">
+              <td rowspan="1" class="text-center">
                 <a
-                  class="px-5 py-2.5 text-base font-bold text-center text-white bg-sky-600 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 inline-flex items-center ml-auto"
+                  class="px-5 py-2.5 text-base font-bold text-center text-white bg-sky-600 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 inline-flex items-center no-underline ml-auto"
                   href="https://github.com/imustafin/pbdoom/releases/download/v0.0.2/applications.zip"
-                >
-                  <span class="mr-2">
-                    <svg
+                  ><span class="mr-2"
+                    ><svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
@@ -96,10 +102,15 @@
                       <path
                         d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z"
                       />
-                    </svg>
-                  </span>
-
-                  Download
+                    </svg> </span
+                  >Download</a
+                >
+                <br />
+                <a
+                  href="/installation"
+                  class="text-[#111827] underline font-medium text-lg"
+                >
+                  How to install
                 </a>
               </td>
             </tr>
@@ -107,7 +118,9 @@
               <td colspan="3" class="px-4">
                 <details>
                   <summary class="pb-4">Changes</summary>
-                  <section class="prose">
+                  <section
+                    class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden"
+                  >
                     <p>Small release to check the release process</p>
 
                     <h3 id="added">Added</h3>
@@ -128,13 +141,12 @@
             >
               <td class="font-bold">v0.0.1</td>
               <td>2023-01-23</td>
-              <td rowspan="1">
+              <td rowspan="1" class="text-center">
                 <a
-                  class="px-5 py-2.5 text-base font-bold text-center text-white bg-sky-600 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 inline-flex items-center ml-auto"
+                  class="px-5 py-2.5 text-base font-bold text-center text-white bg-sky-600 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 inline-flex items-center no-underline ml-auto"
                   href="https://github.com/imustafin/pbdoom/releases/download/v0.0.1/applications.zip"
-                >
-                  <span class="mr-2">
-                    <svg
+                  ><span class="mr-2"
+                    ><svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
@@ -148,10 +160,15 @@
                       <path
                         d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z"
                       />
-                    </svg>
-                  </span>
-
-                  Download
+                    </svg> </span
+                  >Download</a
+                >
+                <br />
+                <a
+                  href="/installation"
+                  class="text-[#111827] underline font-medium text-lg"
+                >
+                  How to install
                 </a>
               </td>
             </tr>
@@ -159,7 +176,9 @@
               <td colspan="3" class="px-4">
                 <details>
                   <summary class="pb-4">Changes</summary>
-                  <section class="prose">
+                  <section
+                    class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden"
+                  >
                     <p>The first proper release! :rage1:</p>
 
                     <h3 id="added">Added</h3>
@@ -186,7 +205,7 @@
         </table>
       </div>
     </main>
-    <footer class="bg-sky-700 text-gray-50 shadow p-4 text-center">
+    <footer class="bg-sky-700 text-gray-50 shadow p-4 text-center text-lg">
       PBDoom by
       <a href="https://imustafin.tatar" class="font-bold">Ilgiz Mustafin</a>
     </footer>
