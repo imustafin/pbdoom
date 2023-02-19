@@ -25,11 +25,23 @@ plugins:
   - jemoji
   - jekyll-postcss
   - jekyll-node-module
+  - jekyll-seo-tag
+
+title: PBDoom
+tagline: Doom for PocketBook eInk devices
+author:
+  name: Ilgiz Mustafin
+  url: https://imustafin.tatar
+lang: en
+webmaster_verifications:
+  yandex: 27b0933fb2cb476e
 
 postcss:
   cache: false
 
 excerpt_separator: '<!-- excerpt -->'
+
+date_format: '%e %B %Y'
 
 prose_class: 'prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden'
 prose_class_unsized: 'prose prose-slate prose-code:before:hidden prose-code:after:hidden'

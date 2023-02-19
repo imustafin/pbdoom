@@ -24,7 +24,7 @@ task :releases do
     {
       'html_url' => r['html_url'],
       'name' => r['name'],
-      'published_at' => Date.iso8601(r['published_at']).iso8601,
+      'published_at' => r['published_at'],
       'download_url' => applications['browser_download_url'],
       'body' => body
     }

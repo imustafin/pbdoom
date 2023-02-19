@@ -1,16 +1,10 @@
 ---
 layout: with_title
 title: Posts
+description: News about PBDoom - Doom for PocketBook eInk devices
 ---
 <div class="w-fit mx-auto space-y-4 mb-6">
   {% for post in site.posts %}
-    <div class="p-5 bg-white shadow">
-      <div class="{{ site.prose_class }}">
-        <h1 class="mb-0"><a href="{{ post.url }}">{{ post.title }}</a></h1>
-        <span>Published on: {{ post.date | date: "%e %B %Y" }}</span>
-        {{ post.excerpt | markdownify }}
-        <a href="{{ post.url }}">Read more…</a>
-      </div>
-    </div>
+    {%- include post_card.html post=post -%}
   {% endfor %}
 </div>

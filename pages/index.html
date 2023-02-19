@@ -1,7 +1,10 @@
 ---
 layout: default
+title: PBDoom - Doom for PocketBook eInk devices
+description: Doom game for PocketBook eInk touch devices
+title_suffix: false
 ---
-<div class="flex py-2 px-10">
+<div class="flex py-2 px-10 mb-6">
   <div class="w-1/2">
     <h1 class="text-4xl font-extrabold">
       PBDoom
@@ -28,19 +31,9 @@ layout: default
         How to install
       </a>
     </div>
-    <h2 class="{{ site.link_class }} font-bold text-4xl font-bold mt-4 mb-4">News</h2>
-    <div class="space-y-4 mb-2">
+    <div class="space-y-4 mb-2 mt-4">
       {% for post in site.posts limit: 2%}
-        <div class="bg-white shadow p-5">
-          <div class="{{ site.prose_class_unsized }} prose-base">
-            <h1 class="mb-0">
-              <a href="{{ post.url }}">{{ post.title }}</a>
-            </h1>
-            <span>Published on: {{ post.date | date: "%e %B %Y" }}</span>
-            {{ post.excerpt | markdownify }}
-            <a href="{{ post.url }}">Read more…</a>
-          </div>
-        </div>
+        {%- include post_card.html post=post -%}
       {% endfor %}
     </div>
     <a href="{{ '/posts' | relative_url }}" class="{{ site.link_class }} text-2xl mt-2">
