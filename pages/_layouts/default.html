@@ -3,15 +3,16 @@ layout: html
 ---
 <body class="bg-sky-100 flex flex-col min-h-screen">
   <header
-    class="w-full bg-sky-700 text-gray-50 shadow p-4 flex font-bold"
+    class="w-full bg-sky-700 text-gray-50 shadow p-4 flex space-x-4 text-xl"
   >
-    <a href="{{ '/' | relative_url }}" class="font-extrabold ml-2 mr-6">PBDoom</a>
+    <a href="{{ '/' | relative_url }}" class="font-bold ml-2 mr-2">PBDoom</a>
     <a href="{{ '/downloads' | relative_url }}">Downloads</a>
+    <a href="{{ '/installation' | relative_url }}">Installation</a>
   </header>
   <main class="grow">
     {{ content }}
   </main>
-  <footer class="bg-sky-700 text-gray-50 shadow p-4 text-center">
+  <footer class="bg-sky-700 text-gray-50 shadow p-4 text-center text-lg">
     PBDoom by <a href="https://imustafin.tatar" class="font-bold">Ilgiz Mustafin</a>
   </footer>
 </body>

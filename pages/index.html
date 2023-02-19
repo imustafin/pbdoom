@@ -19,32 +19,13 @@ layout: default
       icon="heroicons/solid/document_arrow_down.svg"
       text=bc
       class="w-full h-20 justify-center text-xl"
-    %}
-    <h2 class="text-2xl font-bold mt-2 mb-1">Installation</h2>
-    <p>
-      <ol class="list-decimal">
-        <li>
-          Unzip the archive into the <span class="font-mono">applications</span> folder
-          on your device
-        </li>
-        <li>
-          Place your WAD file to <span class="font-mono">applications/pbdoom</span>
-          folder <br>
-          WAD file name should be <b class="font-bold">all lower case</b>:
-          (not <span class="font-mono">DOOM2.WAD</span> but <span class="font-mono">doom2.wad</span>)
-        </li>
-        <li>
-          Your file structure should be like this:<br>
-<pre class="bg-sky-200">applications
-├── pbdoom
-│   ├── doom2.wad
-│   ├── game.app
-└── pbdoom.app</pre>
-        </li>
-        <li>
-          Run the game using the <span class="font-mono">pbdoom</span> icon in the Applications menu
-        </li>
-      </ol>
+    %}<br>
+    <a
+      href="{{ '/installation' | relative_url }}"
+      class="{{ site.link_class }}"
+    >
+      How to install
+    </a>
     <h2 class="text-2xl font-bold mt-2 mb-1">Device compatibility</h2>
     <p>
       PBDoom is known to be running on:
@@ -64,7 +45,7 @@ layout: default
   </div>
   <div class="w-1/2 px-16" id="default-carousel" data-carousel="slide">
     <!-- dark for flowbite carousel indicators being hardcoded with inverse colors -->
-    <div class="dark mx-auto relative w-full h-[600px] shadow bg-gray-400/50 flex flex-col">
+    <div class="dark mx-auto relative w-full h-[600px] shadow bg-white flex flex-col">
       <div class="flex flex-col relative overflow-hidden h-full w-full">
         {% for item in site.data.index_carousel %}
           <div class="hidden flex flex-col h-full duration-700 ease-in-out" data-carousel-item>

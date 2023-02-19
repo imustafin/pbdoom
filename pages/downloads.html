@@ -1,8 +1,8 @@
 ---
-layout: default
+layout: with_title
+title: Downloads
 ---
 <div class="w-[1000px] mx-auto">
-<h1 class="text-4xl font-bold text-center w-full mb-6 mt-4">Downloads</h1>
 
 {% assign r = site.data.releases | first %}
 <div class="w-full bg-white shadow p-4">
@@ -11,7 +11,7 @@ layout: default
       <h2 class="text-2xl font-bold">Latest release: {{ r.name }}</h2>
       Published on {{ r.published_at }} <br>
     </div>
-    <div>
+    <div class="text-center">
       {% capture latest_b %}
         Download<br>PBDoom&nbsp;{{ r.name }}
       {% endcapture %}
@@ -20,10 +20,16 @@ layout: default
         icon="heroicons/solid/document_arrow_down.svg"
         text=latest_b
         href=r.download_url
-      %}
+      %}<br>
+      <a
+        href="{{ '/installation' | relative_url }}"
+        class="{{ site.link_class }}"
+      >
+        How to install
+      </a>
     </div>
   </div>
-  <div class="prose">
+  <div class="{{ site.prose_class }}">
     {{ r.body | markdownify }}
   </div>
 </div>
@@ -44,20 +50,26 @@ layout: default
       <tr class="{{ color }} flex w-full justify-between px-4 pt-4 items-center">
         <td class="font-bold">{{ r.name }}</td>
         <td>{{ r.published_at }}</td>
-        <td rowspan=1>
+        <td rowspan=1 class="text-center">
           {% include button.html
             icon="heroicons/solid/document_arrow_down.svg"
             text="Download"
             class="ml-auto"
             href=r.download_url
-          %}
+          %}<br>
+          <a
+            href="{{ '/installation' | relative_url }}"
+            class="{{ site.link_class }}"
+          >
+            How to install
+          </a>
         </td>
       </tr>
       <tr class="{{ color }}">
         <td colspan=3 class="px-4">
           <details>
             <summary class="pb-4">Changes</summary>
-            <section class="prose">{{ r.body | markdownify }}</section>
+            <section class="{{ site.prose_class }}">{{ r.body | markdownify }}</section>
           </details>
         </td>
       </tr>

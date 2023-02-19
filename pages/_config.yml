@@ -28,3 +28,6 @@ plugins:
 
 postcss:
   cache: false
+
+prose_class: 'prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden'
+link_class: 'text-[#111827] underline font-medium text-lg'
