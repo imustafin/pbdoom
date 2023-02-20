@@ -5,9 +5,20 @@ layout: html
   <header
     class="w-full bg-sky-700 text-gray-50 shadow p-4 flex space-x-4 text-xl"
   >
-    <a href="{{ '/' | relative_url }}" class="font-bold ml-2 mr-2">PBDoom</a>
-    <a href="{{ '/posts' | relative_url }}">Posts</a>
-    <a href="{{ '/downloads' | relative_url }}">Downloads</a>
+    <a href="{{ 'home' | turl }}" class="font-bold ml-2 mr-2">PBDoom</a>
+    <a href="{{ 'posts' | turl }}">
+      {{ site.data.i18n.header.posts | t }}
+    </a>
+    <a href="{{ 'downloads' | turl }}">
+      {{ site.data.i18n.header.downloads | t }}
+    </a>
+
+    <span class="grow"></span>
+    {% unless page.ref == '404' %}
+      {% for lang in site.langs %}
+        <a href="{{ lang | lang_self }}">{{ lang | upcase }}</a>
+      {% endfor %}
+    {% endunless %}
   </header>
   <main class="grow">
     {{ content }}

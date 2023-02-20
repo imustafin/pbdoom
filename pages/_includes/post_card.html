@@ -2,9 +2,14 @@
   <h1 class="text-4xl mb-2">
     <a class="{{ site.link_class }}" href="{{ include.post.url }}">{{ include.post.title }}</a>
   </h1>
-  <span class="text-xl">Published on: {{ include.post.date | date: site.date_format }}</span>
+  <span class="text-xl">
+    {{ site.data.i18n.post_card.published_at | t }}
+    {{ include.post.date | tdate }}
+  </span>
   <div class="{{ site.prose_class }} mt-4">
     {{ include.post.excerpt | markdownify }}
   </div>
-  <a href="{{ include.post.url }}" class="{{ site.link_class }} text-xl">Read more…</a>
+  <a href="{{ include.post.url }}" class="{{ site.link_class }} text-xl">
+    {{ site.data.i18n.post_card.read_more | t }}
+  </a>
 </div>

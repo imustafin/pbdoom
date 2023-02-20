@@ -1,0 +1,105 @@
+header:
+  posts:
+    en: News
+    ru: Новости
+  downloads:
+    en: Downloads
+    ru: Загрузки
+
+home:
+  slogan:
+    en: Doom for PocketBook eInk devices.
+    ru: Doom для устройств PocketBook на электронной бумаге
+  read_older_posts:
+    en: Read older posts…
+    ru: Читать предыдущие записи…
+  device_compatibility:
+    en: Device compatibility
+    ru: Совместимость с устройствами
+  device_compat_desc:
+    en: 'PBDoom is known to be running on:'
+    ru: 'Известно, что PBDoom работает на этих устройствах:'
+  source_code_and_contacts:
+    en: Source code and contacts
+    ru: Исходный код и контакты
+  source_code_and_contacts_desc:
+    en: 'Source code, issues, feature requests are in our GitHub project:'
+    ru: 'Исходный код, проблемы и предложения находятся в нашем проекте на GitHub:'
+  pbdoom_on_github:
+    en: PBDoom on GitHub
+    ru: PBDoom на GitHub
+
+download_button:
+    pre:
+      en: Download PBDoom
+      ru: Скачать PBDoom
+    post:
+      en: ''
+      ru: ''
+
+how_to_install:
+  en: How to install
+  ru: Как установить
+
+post_card:
+  published_at:
+    en: 'Published:'
+    ru: 'Опубликовано:'
+  read_more:
+    en: Read more…
+    ru: Читать дальше…
+
+downloads:
+  latest_release:
+    en: Latest release
+    ru: Последняя версия
+  released_on:
+    en: Released
+    ru: Выпущено
+  previous_releases:
+    en: Previous releases
+    ru: Предыдущие версии
+  download:
+    en: Download
+    ru: Скачать
+  changes:
+    en: Changes
+    ru: Изменения
+
+months:
+  - en: January
+    ru: января
+    tt: гыйнвар
+  - en: February
+    ru: февраля
+    tt: февраль
+  - en: March
+    ru: марта
+    tt: март
+  - en: April
+    ru: апреля
+    tt: апрель
+  - en: May
+    ru: мая
+    tt: май
+  - en: June
+    ru: июня
+    tt: июнь
+  - en: July
+    ru: июля
+    tt: июль
+  - en: August
+    ru: августа
+    tt: август
+  - en: September
+    ru: сентября
+    tt: сентябрь
+  - en: October
+    ru: октября
+    tt: октябрь
+  - en: November
+    ru: ноября
+    tt: ноябрь
+  - en: December
+    ru: декабря
+    tt: декабрь

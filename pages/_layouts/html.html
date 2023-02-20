@@ -1,7 +1,18 @@
 <!doctype html>
-<html lang="{{ site.lang }}">
+<html lang="{{ page.lang }}">
   <head>
     <meta charset="UTF-8">
+
+    {% unless page.ref == '404' %}
+      {% for lang in site.langs %}
+        <link
+          rel="alternate"
+          hreflang="{{ lang }}"
+          href="{{ lang | lang_self | absolute_url }}"
+        />
+      {% endfor %}
+    {% endunless %}
+
     <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
     <script src="{{ 'flowbite/dist/flowbite.min.js' | node_module_url }}"></script>
 

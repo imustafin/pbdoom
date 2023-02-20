@@ -1,25 +1,9 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-#
-# If you need help with YAML syntax, here are some quick references for you:
-# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
-# https://learnxinyminutes.com/docs/yaml/
-#
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
-
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://pbdoom.imustafin.tatar" # the base hostname & protocol for your site, e.g. http://example.com
+
+langs:
+  - en
+  - ru
 
 plugins:
   - jemoji
@@ -46,3 +30,20 @@ date_format: '%e %B %Y'
 prose_class: 'prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden'
 prose_class_unsized: 'prose prose-slate prose-code:before:hidden prose-code:after:hidden'
 link_class: 'text-[#111827] underline'
+
+permalink: pretty
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      lang: en
+  - scope:
+      path: ru
+    values:
+      lang: ru
+  - scope:
+      path: ru
+      type: posts
+    values:
+      lang: ru

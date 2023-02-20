@@ -1,0 +1,81 @@
+---
+layout: with_title
+---
+<div class="w-[1000px] mx-auto">
+
+{% assign r = site.data.releases | first %}
+<div class="w-full bg-white shadow p-4">
+  <div class="flex flex-row w-full">
+    <div class="grow">
+      <h2 class="text-2xl font-bold">
+        {{ site.data.i18n.downloads.latest_release | t }}: {{ r.name }}
+      </h2>
+      {{ site.data.i18n.downloads.released_on | t }}:
+      {{ r.published_at | tdate }} <br>
+    </div>
+    <div class="text-center">
+      {% include release_button.html
+        name=r.name
+        class="h-20"
+      %}<br>
+      <a
+        href="{{ 'installation' | turl }}"
+        class="{{ site.link_class }}"
+      >
+        {{ site.data.i18n.how_to_install | t }}
+      </a>
+    </div>
+  </div>
+  <div class="{{ site.prose_class }}">
+    {{ r.body | markdownify }}
+  </div>
+</div>
+
+
+<h2 class="text-2xl font-bold mt-4 mb-2">
+  {{ site.data.i18n.downloads.previous_releases | t }}
+</h2>
+<table class="w-full shadow mb-6">
+  <thead>
+  </thead>
+  <tbody>
+    {% for r in site.data.releases offset:1 %}
+      {% assign mod = forloop.index | modulo: 2 %}
+      {% if mod == 0 %}
+        {% assign color = "bg-sky-50" %}
+      {% else %}
+        {% assign color = "bg-white" %}
+      {% endif %}
+      <tr class="{{ color }} flex w-full justify-between px-4 pt-4 items-center">
+        <td class="font-bold">{{ r.name }}</td>
+        <td>{{ r.published_at | tdate }}</td>
+        <td rowspan=1 class="text-center">
+          {%- assign text = site.data.i18n.downloads.download | t%}
+          {% include button.html
+            icon="heroicons/solid/document_arrow_down.svg"
+            text=text
+            class="ml-auto"
+            href=r.download_url
+          %}<br>
+          <a
+            href="{{ 'installation' | turl }}"
+            class="{{ site.link_class }}"
+          >
+            {{ site.data.i18n.how_to_install | t }}
+          </a>
+        </td>
+      </tr>
+      <tr class="{{ color }}">
+        <td colspan=3 class="px-4">
+          <details>
+            <summary class="pb-4">
+              {{ site.data.i18n.downloads.changes | t }}
+            </summary>
+            <section class="{{ site.prose_class }}">{{ r.body | markdownify }}</section>
+          </details>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>

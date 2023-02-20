@@ -3,7 +3,7 @@
 2. Unzip the archive to the `applications` directory on the ereader.
 
 3. Place your WADs in the `applications/pbdoom` directory. WAD filenames should
-   be **all lower case** (not `DOOM2.WAD` but `doom2.wad`)
+   be **all lower case** (not `DOOM2.WAD` but `doom2.wad`).
 
 4. You should have this structure:
 ```
