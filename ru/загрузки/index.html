@@ -15,6 +15,12 @@
       href="https://pbdoom.imustafin.tatar/ru/%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8/"
     />
 
+    <link
+      rel="alternate"
+      hreflang="tt"
+      href="https://pbdoom.imustafin.tatar/tt/%D0%B9%D3%A9%D0%BA%D0%BB%D3%99%D2%AF%D0%BB%D3%99%D1%80/"
+    />
+
     <link rel="stylesheet" href="/assets/css/main.css" />
     <script src="/js/flowbite.min.js"></script>
 
@@ -57,7 +63,7 @@
       class="w-full bg-sky-700 text-gray-50 shadow p-4 flex space-x-4 text-xl"
     >
       <a href="/ru/" class="font-bold ml-2 mr-2">PBDoom</a>
-      <a href="/ru/posts/"> Новости </a>
+      <a href="/ru/%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8/"> Новости </a>
       <a href="/ru/%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8/">
         Загрузки
       </a>
@@ -67,6 +73,10 @@
       <a href="/downloads/">EN</a>
 
       <a href="/ru/%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8/">RU</a>
+
+      <a href="/tt/%D0%B9%D3%A9%D0%BA%D0%BB%D3%99%D2%AF%D0%BB%D3%99%D1%80/"
+        >TT</a
+      >
     </header>
     <main class="grow">
       <h1 class="text-4xl font-bold text-center w-full mb-6 mt-4">Загрузки</h1>
@@ -114,20 +124,26 @@
           <div
             class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden"
           >
-            <h3 id="added">Added</h3>
+            <h2 id="добавлено">Добавлено</h2>
 
             <ul>
               <li>
-                DPI (dp) button sizes for uniform sizing across devices
+                Размеры указываются в DPI (dp), чтобы на разных устройствах
+                кнопки имели более похожий размер
                 <a href="https://github.com/imustafin/pbdoom/issues/3">#3</a>
               </li>
               <li>
-                Added vertical margins for game display (refactor display
-                elements into frames)
+                Вертикальные поля для отрисовки игры (переработано размещение
+                элементов интерфейса)
               </li>
-              <li>Added color settings menu</li>
-              <li>Only buttons usable on the current screen are shown</li>
+              <li>Добавлено меню настроек цвета</li>
+              <li>
+                Отображаются только те кнопки, которые можно использовать в
+                текущий момент
+              </li>
             </ul>
+
+            <!-- excerpt -->
           </div>
         </div>
 
@@ -178,16 +194,16 @@
                   <section
                     class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden"
                   >
-                    <p>Small release to check the release process</p>
+                    <p>Маленький релиз для проверки процесса выпуска релизов</p>
 
-                    <h3 id="added">Added</h3>
+                    <h2 id="добавлено">Добавлено</h2>
 
                     <ul>
-                      <li>
-                        Moved render mode selection from buttons to a menu
-                      </li>
-                      <li>About message</li>
+                      <li>Выбор режима отрисовки перемещён в меню</li>
+                      <li>Сообщение «О програме» (About)</li>
                     </ul>
+
+                    <!-- excerpt -->
                   </section>
                 </details>
               </td>
@@ -236,22 +252,27 @@
                   <section
                     class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden"
                   >
-                    <p>The first proper release! :rage1:</p>
+                    <p>Первый оформленный релиз как таковой!</p>
 
-                    <h3 id="added">Added</h3>
+                    <h2 id="добавлено">Добавлено</h2>
 
                     <ul>
                       <li>
-                        Proper installation instructions #1 with downloads
-                        available from the
-                        <a href="https://github.com/imustafin/pbdoom/releases"
-                          >releases</a
+                        Полноценные инструкции по установке
+                        <a href="https://github.com/imustafin/pbdoom/issues/1"
+                          >#1</a
                         >
-                        page
+                        с загрузками со
+                        <a href="https://github.com/imustafin/pbdoom/releases"
+                          >страницы релизов</a
+                        >
                       </li>
                       <li>
-                        Control buttons placement is computed based on screen
-                        dimensions #1
+                        Положение кнопок управление высчитывается на основе
+                        размера экрана
+                        <a href="https://github.com/imustafin/pbdoom/issues/1"
+                          >#1</a
+                        >
                       </li>
                     </ul>
                   </section>

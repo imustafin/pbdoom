@@ -18,15 +18,11 @@ task :releases do
   result = releases.map do |r|
     applications = r['assets'].find { |x| x['name'] == 'applications.zip' }
 
-    body = r['body']
-      .gsub(/^#/, '###') # add two levels of heading offset for downloads page
-
     {
       'html_url' => r['html_url'],
       'name' => r['name'],
       'published_at' => r['published_at'],
-      'download_url' => applications['browser_download_url'],
-      'body' => body
+      'download_url' => applications['browser_download_url']
     }
   end
 
