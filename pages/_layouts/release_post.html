@@ -1,0 +1,23 @@
+---
+layout: post
+---
+{{ content }}
+<h2>{{ site.data.i18n.release_post.download | t }}</h2>
+{{ site.data.i18n.release_post.download_text | t }}
+<br>
+{% include release_button.html
+  name=page.ref
+%}
+
+<h2>{{ site.data.i18n.release_post.installation | t }}</h2>
+{% capture installation_text %}
+{% case page.lang %}
+{% when 'en' %}
+{% include installation_text.md %}
+{% when 'ru' %}
+{% include installation_text_ru.md %}
+{% when 'tt' %}
+{% include installation_text_tt.md %}
+{% endcase %}
+{% endcapture %}
+{{ installation_text | markdownify }}

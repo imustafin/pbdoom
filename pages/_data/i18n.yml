@@ -2,69 +2,102 @@ header:
   posts:
     en: News
     ru: Новости
+    tt: Яңалыклар
   downloads:
     en: Downloads
     ru: Загрузки
+    tt: Йөкләүләр
 
 home:
   slogan:
     en: Doom for PocketBook eInk devices.
     ru: Doom для устройств PocketBook на электронной бумаге
+    tt: PocketBook электрон кәгазьле җайланмалар өчен Doom уены
   read_older_posts:
     en: Read older posts…
     ru: Читать предыдущие записи…
+    tt: Алдагы язмаларны уку…
   device_compatibility:
     en: Device compatibility
     ru: Совместимость с устройствами
+    tt: Җайланма ярашлыгы
   device_compat_desc:
     en: 'PBDoom is known to be running on:'
     ru: 'Известно, что PBDoom работает на этих устройствах:'
+    tt: 'PBDoom бу җайланмаларда эшләве билгеле:'
   source_code_and_contacts:
     en: Source code and contacts
     ru: Исходный код и контакты
+    tt: Чыганак коды һәм контактлар
   source_code_and_contacts_desc:
     en: 'Source code, issues, feature requests are in our GitHub project:'
     ru: 'Исходный код, проблемы и предложения находятся в нашем проекте на GitHub:'
+    tt: 'Чыганак коды, мәсьәләләр һәм тәкъдимнәр безнең GitHub проектында:'
   pbdoom_on_github:
     en: PBDoom on GitHub
     ru: PBDoom на GitHub
+    tt: PBDoom GitHub-та
 
 download_button:
     pre:
       en: Download PBDoom
       ru: Скачать PBDoom
+      tt: PBDoom
     post:
       en: ''
       ru: ''
+      tt: 'йөкләү'
+
+release_post:
+  download:
+    en: Download
+    ru: Скачать
+    tt: Йөкләү
+  download_text:
+    en: 'You can download this version here:'
+    ru: 'Вы можете скачать эту версию здесь:'
+    tt: 'Бу версияне монда йөкли аласыз:'
+  installation:
+    en: Installation
+    ru: Установка
+    tt: Урнаштыру
 
 how_to_install:
   en: How to install
   ru: Как установить
+  tt: Урнаштыру ысулы
 
 post_card:
   published_at:
     en: 'Published:'
     ru: 'Опубликовано:'
+    tt: 'Басылган:'
   read_more:
     en: Read more…
     ru: Читать дальше…
+    tt: Тулысынчы уку…
 
 downloads:
   latest_release:
-    en: Latest release
+    en: Latest version
     ru: Последняя версия
+    tt: Соңгы версиясе
   released_on:
     en: Released
     ru: Выпущено
+    tt: Чыгарылыш
   previous_releases:
     en: Previous releases
     ru: Предыдущие версии
+    tt: Элекке версияләр
   download:
     en: Download
     ru: Скачать
+    tt: Йөкләү
   changes:
     en: Changes
     ru: Изменения
+    tt: Үзгәрешләр
 
 months:
   - en: January

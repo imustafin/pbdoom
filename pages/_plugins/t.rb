@@ -5,7 +5,15 @@ module Jekyll
 
       lang = @context.registers[:page]['lang']
 
-      obj[lang]
+      translation = obj[lang]
+
+      unless translation
+        raise <<~MSG
+        No translation for lang #{lang} in #{obj} on page #{@context.registers[:page]['path']}
+        MSG
+      end
+
+      translation
     end
 
     def tdate(obj)

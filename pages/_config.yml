@@ -4,6 +4,7 @@ url: "https://pbdoom.imustafin.tatar" # the base hostname & protocol for your si
 langs:
   - en
   - ru
+  - tt
 
 plugins:
   - jemoji
@@ -25,8 +26,6 @@ postcss:
 
 excerpt_separator: '<!-- excerpt -->'
 
-date_format: '%e %B %Y'
-
 prose_class: 'prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden'
 prose_class_unsized: 'prose prose-slate prose-code:before:hidden prose-code:after:hidden'
 link_class: 'text-[#111827] underline'
@@ -42,6 +41,10 @@ defaults:
       path: ru
     values:
       lang: ru
+  - scope:
+      path: tt
+    values:
+      lang: tt
   - scope:
       path: ru
       type: posts
