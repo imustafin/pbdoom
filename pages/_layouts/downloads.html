@@ -27,7 +27,8 @@ layout: with_title
     </div>
   </div>
   <div class="{{ site.prose_class }}">
-    {{ r.body | markdownify }}
+    {% assign post = site.posts | where: 'ref', r.name | where: 'lang', page.lang | first %}
+    {{ post.excerpt }}
   </div>
 </div>
 
@@ -71,7 +72,10 @@ layout: with_title
             <summary class="pb-4">
               {{ site.data.i18n.downloads.changes | t }}
             </summary>
-            <section class="{{ site.prose_class }}">{{ r.body | markdownify }}</section>
+            <section class="{{ site.prose_class }}">
+              {% assign post = site.posts | where: 'ref', r.name | where: 'lang', page.lang | first %}
+              {{ post.excerpt }}
+            </section>
           </details>
         </td>
       </tr>
