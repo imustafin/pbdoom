@@ -86,7 +86,8 @@ void main_menu_handler(int i) {
            "About PBDoom",
            "PBDoom " GIT_TAG "\n"
            "by Ilgiz Mustafin, based on SDL Doom by Sam Lantinga\n"
-           "Get the Source code and other info at \n"
+           "Get the Source code and other info at:\n"
+           "https://pbdoom.imustafin.tatar, \n"
            "https://github.com/imustafin/pbdoom"
            ,
            "Ok", NULL, NULL
