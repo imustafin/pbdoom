@@ -46,7 +46,7 @@ layout: default
     <div class="dark mx-auto relative w-full h-[600px] shadow bg-white flex flex-col">
       <div class="flex flex-col relative overflow-hidden h-full w-full">
         {% for item in site.data.index_carousel %}
-          <div class="hidden flex flex-col h-full duration-700 ease-in-out" data-carousel-item>
+          <div class="hidden bg-white flex flex-col h-full duration-700 ease-in-out" data-carousel-item>
             <img
               src="{{ item.image }}"
               class="h-full mx-auto pt-2"
@@ -54,7 +54,7 @@ layout: default
             <div
               class="w-full bottom-0 text-gray-800 pt-2 text-center font-bold"
             >
-              {{ item.text }}
+              {{ item.text | t }}
             </div>
           </div>
         {% endfor %}

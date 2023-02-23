@@ -1,4 +1,15 @@
 - image: /assets/img/splash.png
-  text: 10" display support
+  text:
+    en: Works on 10" displays
+    ru: Работает на 10" экранах
+    tt: 10" экраннарда эшли
+- image: /assets/img/inch_6_display.png
+  text:
+    en: Works on 6" displays
+    ru: Работает на 6" экранах
+    tt: 6" экраннарда эшли
 - image: /assets/img/color_settings.png
-  text: Color settings
+  text:
+    en: Color settings
+    ru: Настройки цвета
+    tt: Төс көйләүләре
