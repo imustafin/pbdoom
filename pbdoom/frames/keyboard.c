@@ -32,6 +32,8 @@ enum {
   button_five,
   button_six,
   button_seven,
+  button_comma,
+  button_period,
   BUTTONS_N
 } button_i;
 
@@ -55,6 +57,8 @@ button_t buttons[BUTTONS_N] = {
   {'5', "5", keyboard_mode_level},
   {'6', "6", keyboard_mode_level},
   {'7', "7", keyboard_mode_level},
+  {',', ",", keyboard_mode_level},
+  {'.', ".", keyboard_mode_level}
 };
 
 void compute_button_positions() {
@@ -113,9 +117,20 @@ void compute_button_positions() {
   buttons[button_n].h = b;
 
   buttons[button_ctrl].w = 3 * b;
-  buttons[button_ctrl].h = 2 * b;
+  buttons[button_ctrl].h = 1 * b;
   buttons[button_ctrl].x = sw - ox - buttons[button_ctrl].w;
-  buttons[button_ctrl].y = y + ym;
+  buttons[button_ctrl].y = y + ym + b;
+
+  buttons[button_period].w = 1.5 * b;
+  buttons[button_period].h = b;
+  buttons[button_period].x = sw - ox - buttons[button_period].w;
+  buttons[button_period].y = y + ym + 1;
+
+  buttons[button_comma].w = 1.5 * b + 1;
+  buttons[button_comma].h = b;
+  buttons[button_comma].x = buttons[button_period].x - buttons[button_comma].w + 1;
+  buttons[button_comma].y = y + ym + 1;
+
 
   buttons[button_space].w = 3 * b;
   buttons[button_space].h = b;
