@@ -3,7 +3,7 @@ layout: html
 ---
 <body class="bg-sky-100 flex flex-col min-h-screen">
   <header
-    class="w-full bg-sky-700 text-gray-50 shadow p-4 flex space-x-4 text-xl"
+    class="w-full bg-sky-700 text-gray-50 shadow p-4 flex flex-wrap space-x-4 text-xl"
   >
     <a href="{{ 'home' | turl }}" class="font-bold ml-2 mr-2">PBDoom</a>
     <a href="{{ 'posts' | turl }}">
@@ -13,11 +13,14 @@ layout: html
       {{ site.data.i18n.header.downloads | t }}
     </a>
 
-    <span class="grow"></span>
+    <div class="grow hidden sm:block"></div>
+
     {% unless page.ref == '404' %}
-      {% for lang in site.langs %}
-        <a href="{{ lang | lang_self }}">{{ lang | upcase }}</a>
-      {% endfor %}
+      <div class="grow sm:grow-0 text-center sm:text-right">
+        {% for lang in site.langs %}
+          <a href="{{ lang | lang_self }}">{{ lang | upcase }}</a>
+        {% endfor %}
+      </div>
     {% endunless %}
   </header>
   <main class="grow">

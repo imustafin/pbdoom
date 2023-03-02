@@ -1,8 +1,8 @@
-<div class="p-5 bg-white shadow">
-  <h1 class="text-4xl mb-2">
+<div class="p-2 sm:p-4 bg-white shadow">
+  <h1 class="text-2xl sm:text-3xl md:text-4xl mb-2">
     <a class="{{ site.link_class }}" href="{{ include.post.url }}">{{ include.post.title }}</a>
   </h1>
-  <span class="text-xl">
+  <span class="sm:text-lg md:text-xl lg:text-2xl">
     {{ site.data.i18n.post_card.published_at | t }}
     {{ include.post.date | tdate }}
   </span>

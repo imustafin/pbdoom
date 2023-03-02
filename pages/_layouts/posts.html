@@ -1,7 +1,7 @@
 ---
 layout: with_title
 ---
-<div class="w-fit mx-auto space-y-4 mb-6">
+<div class="w-fit mx-auto space-y-4 mb-6 px-2">
   {% assign posts = site.posts | where: 'lang', page.lang %}
   {% for post in posts %}
     {%- include post_card.html post=post -%}
