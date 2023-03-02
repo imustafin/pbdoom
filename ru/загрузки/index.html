@@ -21,6 +21,7 @@
       href="https://pbdoom.imustafin.tatar/tt/%D0%B9%D3%A9%D0%BA%D0%BB%D3%99%D2%AF%D0%BB%D3%99%D1%80/"
     />
 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/assets/css/main.css" />
     <script src="/js/flowbite.min.js"></script>
 
@@ -60,7 +61,7 @@
   </head>
   <body class="bg-sky-100 flex flex-col min-h-screen">
     <header
-      class="w-full bg-sky-700 text-gray-50 shadow p-4 flex space-x-4 text-xl"
+      class="w-full bg-sky-700 text-gray-50 shadow p-4 flex flex-wrap space-x-4 text-xl"
     >
       <a href="/ru/" class="font-bold ml-2 mr-2">PBDoom</a>
       <a href="/ru/%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8/"> Новости </a>
@@ -68,19 +69,21 @@
         Загрузки
       </a>
 
-      <span class="grow"></span>
+      <div class="grow hidden sm:block"></div>
 
-      <a href="/downloads/">EN</a>
+      <div class="grow sm:grow-0 text-center sm:text-right">
+        <a href="/downloads/">EN</a>
 
-      <a href="/ru/%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8/">RU</a>
+        <a href="/ru/%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8/">RU</a>
 
-      <a href="/tt/%D0%B9%D3%A9%D0%BA%D0%BB%D3%99%D2%AF%D0%BB%D3%99%D1%80/"
-        >TT</a
-      >
+        <a href="/tt/%D0%B9%D3%A9%D0%BA%D0%BB%D3%99%D2%AF%D0%BB%D3%99%D1%80/"
+          >TT</a
+        >
+      </div>
     </header>
     <main class="grow">
       <h1 class="text-4xl font-bold text-center w-full mb-6 mt-4">Загрузки</h1>
-      <div class="w-[1000px] mx-auto">
+      <div class="px-2 w-full lg:w-[1000px] mx-auto">
         <div class="w-full bg-white shadow p-4">
           <div class="flex flex-row w-full">
             <div class="grow">

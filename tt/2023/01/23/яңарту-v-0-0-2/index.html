@@ -21,6 +21,7 @@
       href="https://pbdoom.imustafin.tatar/tt/2023/01/23/%D1%8F%D2%A3%D0%B0%D1%80%D1%82%D1%83-v-0-0-2/"
     />
 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/assets/css/main.css" />
     <script src="/js/flowbite.min.js"></script>
 
@@ -79,7 +80,7 @@
   </head>
   <body class="bg-sky-100 flex flex-col min-h-screen">
     <header
-      class="w-full bg-sky-700 text-gray-50 shadow p-4 flex space-x-4 text-xl"
+      class="w-full bg-sky-700 text-gray-50 shadow p-4 flex flex-wrap space-x-4 text-xl"
     >
       <a href="/tt/" class="font-bold ml-2 mr-2">PBDoom</a>
       <a href="/tt/%D1%8F%D2%A3%D0%B0%D0%BB%D1%8B%D0%BA%D0%BB%D0%B0%D1%80/">
@@ -89,112 +90,121 @@
         Йөкләүләр
       </a>
 
-      <span class="grow"></span>
+      <div class="grow hidden sm:block"></div>
 
-      <a href="/2023/01/23/release-v-0-0-2/">EN</a>
+      <div class="grow sm:grow-0 text-center sm:text-right">
+        <a href="/2023/01/23/release-v-0-0-2/">EN</a>
 
-      <a
-        href="/ru/2023/01/23/%D0%BE%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-v-0-0-2/"
-        >RU</a
-      >
+        <a
+          href="/ru/2023/01/23/%D0%BE%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-v-0-0-2/"
+          >RU</a
+        >
 
-      <a href="/tt/2023/01/23/%D1%8F%D2%A3%D0%B0%D1%80%D1%82%D1%83-v-0-0-2/"
-        >TT</a
-      >
+        <a href="/tt/2023/01/23/%D1%8F%D2%A3%D0%B0%D1%80%D1%82%D1%83-v-0-0-2/"
+          >TT</a
+        >
+      </div>
     </header>
     <main class="grow">
-      <div class="bg-white shadow p-5 w-fit mx-auto my-6">
-        <h1 class="text-4xl mb-2">PBDoom v0.0.2 чыгарылды</h1>
+      <div class="md:p-2 md:p-4">
+        <div class="bg-white shadow px-2 pb-2 pt-2 w-fit mx-auto">
+          <h1 class="text-2xl sm:text-3xl md:text-4xl mb-2">
+            PBDoom v0.0.2 чыгарылды
+          </h1>
 
-        <span class="text-xl"> Басылган: 23 гыйнвар 2023 </span>
-
-        <div
-          class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden mx-auto pt-8"
-        >
-          <p>Яңа версия чыгарылу барышы тикшерү өчен кечкенә чыгарылыш.</p>
-
-          <h2 id="өстәлгән">Өстәлгән</h2>
-
-          <ul>
-            <li>Сурәтләү тәртибе менюга күчереп куелган</li>
-            <li>«Программа турында» (About) тексты</li>
-          </ul>
-
-          <!-- excerpt -->
-
-          <h2>Йөкләү</h2>
-          Бу версияне монда йөкли аласыз:
-          <br />
-
-          <span class="not-prose"
-            ><a
-              class="px-5 py-2.5 text-base font-bold text-center text-white bg-sky-600 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 inline-flex items-center no-underline"
-              href=""
-              ><span class="mr-2"
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.625 1.5H9a3.75 3.75 0 013.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 013.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 01-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875zm5.845 17.03a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V12a.75.75 0 00-1.5 0v4.19l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3z"
-                    clip-rule="evenodd"
-                  />
-                  <path
-                    d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z"
-                  />
-                </svg>
-              </span>
-              PBDoom (v0.0.2) йөкләү</a
-            >
+          <span class="sm:text-lg md:text-xl lg:text-2xl">
+            Басылган: 23 гыйнвар 2023
           </span>
 
-          <h2>Урнаштыру</h2>
+          <div
+            class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden mx-auto pt-8"
+          >
+            <p>Яңа версия чыгарылу барышы тикшерү өчен кечкенә чыгарылыш.</p>
 
-          <ol>
-            <li>Уен архивны йөкләгез</li>
-            <li>
-              Архивтан файлларны электрон китапның
-              <code class="language-plaintext highlighter-rouge"
-                >applications</code
+            <h2 id="өстәлгән">Өстәлгән</h2>
+
+            <ul>
+              <li>Сурәтләү тәртибе менюга күчереп куелган</li>
+              <li>«Программа турында» (About) тексты</li>
+            </ul>
+
+            <!-- excerpt -->
+
+            <h2>Йөкләү</h2>
+            Бу версияне монда йөкли аласыз:
+            <br />
+
+            <span class="not-prose"
+              ><a
+                class="px-5 py-2.5 text-base font-bold text-center text-white bg-sky-600 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 inline-flex items-center no-underline"
+                href=""
+                ><span class="mr-2"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.625 1.5H9a3.75 3.75 0 013.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 013.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 01-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875zm5.845 17.03a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V12a.75.75 0 00-1.5 0v4.19l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3z"
+                      clip-rule="evenodd"
+                    />
+                    <path
+                      d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z"
+                    />
+                  </svg>
+                </span>
+                PBDoom (v0.0.2) йөкләү</a
               >
-              папкасына куегыз
-            </li>
-            <li>
-              WAD файлларны
-              <code class="language-plaintext highlighter-rouge"
-                >applications/pbdoom</code
-              >
-              папкасына куегыз. WAD файлларның исемнәре
-              <strong>юл хәрефләр</strong> белын язылган тиеш (<code
-                class="language-plaintext highlighter-rouge"
-                >DOOM2.WAD</code
-              >
-              түгел, ә
-              <code class="language-plaintext highlighter-rouge">doom2.wad</code
-              >).
-            </li>
-            <li>
-              Сезнең түбәндәге структура килеп чыгарга тиеш:
-              <div class="language-plaintext highlighter-rouge">
-                <div class="highlight">
-                  <pre class="highlight"><code>applications
+            </span>
+
+            <h2>Урнаштыру</h2>
+
+            <ol>
+              <li>Уен архивны йөкләгез</li>
+              <li>
+                Архивтан файлларны электрон китапның
+                <code class="language-plaintext highlighter-rouge"
+                  >applications</code
+                >
+                папкасына куегыз
+              </li>
+              <li>
+                WAD файлларны
+                <code class="language-plaintext highlighter-rouge"
+                  >applications/pbdoom</code
+                >
+                папкасына куегыз. WAD файлларның исемнәре
+                <strong>юл хәрефләр</strong> белын язылган тиеш (<code
+                  class="language-plaintext highlighter-rouge"
+                  >DOOM2.WAD</code
+                >
+                түгел, ә
+                <code class="language-plaintext highlighter-rouge"
+                  >doom2.wad</code
+                >).
+              </li>
+              <li>
+                Сезнең түбәндәге структура килеп чыгарга тиеш:
+                <div class="language-plaintext highlighter-rouge">
+                  <div class="highlight">
+                    <pre class="highlight"><code>applications
 ├── pbdoom
 │   ├── doom2.wad
 │   ├── game.app
 └── pbdoom.app
 </code></pre>
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li>
-              Электрон китапның кушымталар менюсындагы
-              <code class="language-plaintext highlighter-rouge">pbdoom</code>
-              тамгачык басып уенны эшләтегез
-            </li>
-          </ol>
+              </li>
+              <li>
+                Электрон китапның кушымталар менюсындагы
+                <code class="language-plaintext highlighter-rouge">pbdoom</code>
+                тамгачык басып уенны эшләтегез
+              </li>
+            </ol>
+          </div>
         </div>
       </div>
     </main>

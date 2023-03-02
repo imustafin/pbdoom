@@ -21,6 +21,7 @@
       href="https://pbdoom.imustafin.tatar/tt/"
     />
 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/assets/css/main.css" />
     <script src="/js/flowbite.min.js"></script>
 
@@ -70,23 +71,25 @@
   </head>
   <body class="bg-sky-100 flex flex-col min-h-screen">
     <header
-      class="w-full bg-sky-700 text-gray-50 shadow p-4 flex space-x-4 text-xl"
+      class="w-full bg-sky-700 text-gray-50 shadow p-4 flex flex-wrap space-x-4 text-xl"
     >
       <a href="/" class="font-bold ml-2 mr-2">PBDoom</a>
       <a href="/posts/"> News </a>
       <a href="/downloads/"> Downloads </a>
 
-      <span class="grow"></span>
+      <div class="grow hidden sm:block"></div>
 
-      <a href="/">EN</a>
+      <div class="grow sm:grow-0 text-center sm:text-right">
+        <a href="/">EN</a>
 
-      <a href="/ru/">RU</a>
+        <a href="/ru/">RU</a>
 
-      <a href="/tt/">TT</a>
+        <a href="/tt/">TT</a>
+      </div>
     </header>
     <main class="grow">
-      <div class="flex py-2 px-10 mb-6">
-        <div class="w-1/2">
+      <div class="grid grid-cols-2 pt-4 px-1 sm:px-4 gap-4 lg:px-8">
+        <div class="col-span-2 md:col-span-1">
           <h1 class="text-4xl font-extrabold">PBDoom</h1>
           <p class="text-2xl mb-4">Doom for PocketBook eInk devices.</p>
 
@@ -118,91 +121,12 @@
               How to install
             </a>
           </div>
-          <div class="space-y-4 mb-2 mt-4">
-            <div class="p-5 bg-white shadow">
-              <h1 class="text-4xl mb-2">
-                <a
-                  class="text-[#111827] underline"
-                  href="/2023/02/23/release-v-0-0-4/"
-                  >PBDoom v0.0.4 has been released</a
-                >
-              </h1>
-              <span class="text-xl"> Published: 23 February 2023 </span>
-              <div
-                class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden mt-4"
-              >
-                <h2 id="added">Added</h2>
-
-                <ul>
-                  <li>
-                    New website:
-                    <a href="https://pbdoom.imustafin.tatar"
-                      >https://pbdoom.imustafin.tatar</a
-                    >
-                  </li>
-                  <li>
-                    Special optimized layout for 6” devices
-                    <a href="https://github.com/imustafin/pbdoom/issues/4"
-                      >#4</a
-                    >
-                  </li>
-                  <li>Added digit buttons for weapon switching</li>
-                  <li>Bullet near the current render mode in menu</li>
-                </ul>
-
-                <!-- excerpt -->
-              </div>
-              <a
-                href="/2023/02/23/release-v-0-0-4/"
-                class="text-[#111827] underline text-xl"
-              >
-                Read more…
-              </a>
-            </div>
-            <div class="p-5 bg-white shadow">
-              <h1 class="text-4xl mb-2">
-                <a
-                  class="text-[#111827] underline"
-                  href="/2023/02/13/release-v-0-0-3/"
-                  >PBDoom v0.0.3 has been released</a
-                >
-              </h1>
-              <span class="text-xl"> Published: 13 February 2023 </span>
-              <div
-                class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden mt-4"
-              >
-                <h2 id="added">Added</h2>
-
-                <ul>
-                  <li>
-                    DPI (dp) button sizes for uniform sizing across devices
-                    <a href="https://github.com/imustafin/pbdoom/issues/3"
-                      >#3</a
-                    >
-                  </li>
-                  <li>
-                    Added vertical margins for game display (refactor display
-                    elements into frames)
-                  </li>
-                  <li>Added color settings menu</li>
-                  <li>Only buttons usable on the current screen are shown</li>
-                </ul>
-
-                <!-- excerpt -->
-              </div>
-              <a
-                href="/2023/02/13/release-v-0-0-3/"
-                class="text-[#111827] underline text-xl"
-              >
-                Read more…
-              </a>
-            </div>
-          </div>
-          <a href="/posts/" class="text-[#111827] underline text-2xl mt-2">
-            Read older posts…
-          </a>
         </div>
-        <div class="w-1/2 px-16" id="default-carousel" data-carousel="slide">
+        <div
+          class="col-span-2 sm:col-span-1 sm:order-3 md:order-2 md:row-span-2"
+          id="default-carousel"
+          data-carousel="slide"
+        >
           <!-- dark for flowbite carousel indicators being hardcoded with inverse colors -->
           <div
             class="dark mx-auto relative w-full h-[600px] shadow bg-white flex flex-col"
@@ -329,6 +253,10 @@
               </button>
             </div>
           </div>
+        </div>
+        <div
+          class="col-span-2 sm:order-2 md:order-last sm:col-span-1 md:row-span-2"
+        >
           <h2 class="text-2xl font-bold mt-2 mb-1">Device compatibility</h2>
           <p>PBDoom is known to be running on:</p>
 
@@ -363,6 +291,98 @@
               >PBDoom on GitHub</a
             >
           </p>
+        </div>
+
+        <div
+          class="col-span-2 order-last md:order-3 md:col-span-1 md:row-span-4"
+        >
+          <div class="space-y-4 mb-2 mt-4">
+            <div class="p-2 sm:p-4 bg-white shadow">
+              <h1 class="text-2xl sm:text-3xl md:text-4xl mb-2">
+                <a
+                  class="text-[#111827] underline"
+                  href="/2023/02/23/release-v-0-0-4/"
+                  >PBDoom v0.0.4 has been released</a
+                >
+              </h1>
+              <span class="sm:text-lg md:text-xl lg:text-2xl">
+                Published: 23 February 2023
+              </span>
+              <div
+                class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden mt-4"
+              >
+                <h2 id="added">Added</h2>
+
+                <ul>
+                  <li>
+                    New website:
+                    <a href="https://pbdoom.imustafin.tatar"
+                      >https://pbdoom.imustafin.tatar</a
+                    >
+                  </li>
+                  <li>
+                    Special optimized layout for 6” devices
+                    <a href="https://github.com/imustafin/pbdoom/issues/4"
+                      >#4</a
+                    >
+                  </li>
+                  <li>Added digit buttons for weapon switching</li>
+                  <li>Bullet near the current render mode in menu</li>
+                </ul>
+
+                <!-- excerpt -->
+              </div>
+              <a
+                href="/2023/02/23/release-v-0-0-4/"
+                class="text-[#111827] underline text-xl"
+              >
+                Read more…
+              </a>
+            </div>
+            <div class="p-2 sm:p-4 bg-white shadow">
+              <h1 class="text-2xl sm:text-3xl md:text-4xl mb-2">
+                <a
+                  class="text-[#111827] underline"
+                  href="/2023/02/13/release-v-0-0-3/"
+                  >PBDoom v0.0.3 has been released</a
+                >
+              </h1>
+              <span class="sm:text-lg md:text-xl lg:text-2xl">
+                Published: 13 February 2023
+              </span>
+              <div
+                class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden mt-4"
+              >
+                <h2 id="added">Added</h2>
+
+                <ul>
+                  <li>
+                    DPI (dp) button sizes for uniform sizing across devices
+                    <a href="https://github.com/imustafin/pbdoom/issues/3"
+                      >#3</a
+                    >
+                  </li>
+                  <li>
+                    Added vertical margins for game display (refactor display
+                    elements into frames)
+                  </li>
+                  <li>Added color settings menu</li>
+                  <li>Only buttons usable on the current screen are shown</li>
+                </ul>
+
+                <!-- excerpt -->
+              </div>
+              <a
+                href="/2023/02/13/release-v-0-0-3/"
+                class="text-[#111827] underline text-xl"
+              >
+                Read more…
+              </a>
+            </div>
+          </div>
+          <a href="/posts/" class="text-[#111827] underline text-2xl mt-2">
+            Read older posts…
+          </a>
         </div>
       </div>
     </main>
