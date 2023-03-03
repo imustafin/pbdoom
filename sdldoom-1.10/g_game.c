@@ -252,9 +252,6 @@ void G_BuildTiccmd (ticcmd_t* cmd)
     cmd->consistancy = 
 	consistancy[consoleplayer][maketic%BACKUPTICS]; 
 
- 
-    strafe = gamekeydown[key_strafe] || mousebuttons[mousebstrafe] 
-	|| joybuttons[joybstrafe]; 
     speed = gamekeydown[key_speed] || joybuttons[joybspeed];
  
     forward = side = 0;
@@ -273,38 +270,12 @@ void G_BuildTiccmd (ticcmd_t* cmd)
 	tspeed = 2;             // slow turn 
     else 
 	tspeed = speed;
-    
-    // let movement keys cancel each other out
-    if (strafe) 
-    { 
-	if (gamekeydown[key_right]) 
-	{
-	    // fprintf(stderr, "strafe right\n");
-	    side += sidemove[speed]; 
-	}
-	if (gamekeydown[key_left]) 
-	{
-	    //	fprintf(stderr, "strafe left\n");
-	    side -= sidemove[speed]; 
-	}
-	if (joyxmove > 0) 
-	    side += sidemove[speed]; 
-	if (joyxmove < 0) 
-	    side -= sidemove[speed]; 
- 
-    } 
-    else 
-    { 
-	if (gamekeydown[key_right]) 
-	    cmd->angleturn -= angleturn[tspeed]; 
-	if (gamekeydown[key_left]) 
-	    cmd->angleturn += angleturn[tspeed]; 
-	if (joyxmove > 0) 
-	    cmd->angleturn -= angleturn[tspeed]; 
-	if (joyxmove < 0) 
-	    cmd->angleturn += angleturn[tspeed]; 
-    } 
- 
+
+    side += (joyxmove * sidemove[speed]) / 100;
+
+    if (gamekeydown[key_right]) cmd->angleturn -= angleturn[tspeed];
+    if (gamekeydown[key_left]) cmd->angleturn += angleturn[tspeed];
+
     if (gamekeydown[key_up]) 
     {
 	// fprintf(stderr, "up\n");
@@ -315,10 +286,7 @@ void G_BuildTiccmd (ticcmd_t* cmd)
 	// fprintf(stderr, "down\n");
 	forward -= forwardmove[speed]; 
     }
-    if (joyymove < 0) 
-	forward += forwardmove[speed]; 
-    if (joyymove > 0) 
-	forward -= forwardmove[speed]; 
+    forward += (joyymove * forwardmove[speed]) / 100;
     if (gamekeydown[key_straferight]) 
 	side += sidemove[speed]; 
     if (gamekeydown[key_strafeleft]) 
@@ -374,39 +342,9 @@ void G_BuildTiccmd (ticcmd_t* cmd)
 	    dclickstate = 0; 
 	} 
     }
-    
-    // strafe double click
-    bstrafe =
-	mousebuttons[mousebstrafe] 
-	|| joybuttons[joybstrafe]; 
-    if (bstrafe != dclickstate2 && dclicktime2 > 1 ) 
-    { 
-	dclickstate2 = bstrafe; 
-	if (dclickstate2) 
-	    dclicks2++; 
-	if (dclicks2 == 2) 
-	{ 
-	    cmd->buttons |= BT_USE; 
-	    dclicks2 = 0; 
-	} 
-	else 
-	    dclicktime2 = 0; 
-    } 
-    else 
-    { 
-	dclicktime2 += ticdup; 
-	if (dclicktime2 > 20) 
-	{ 
-	    dclicks2 = 0; 
-	    dclickstate2 = 0; 
-	} 
-    } 
  
     forward += mousey; 
-    if (strafe) 
-	side += mousex*2; 
-    else 
-	cmd->angleturn -= mousex*0x8; 
+    cmd->angleturn -= mousex*0x8; 
 
     mousex = mousey = 0; 
 	 

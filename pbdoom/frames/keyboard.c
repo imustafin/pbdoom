@@ -32,19 +32,26 @@ enum {
   button_five,
   button_six,
   button_seven,
-  button_comma,
-  button_period,
+  button_turn_left,
+  button_turn_right,
   BUTTONS_N
 } button_i;
 
 
 keyboard_mode current_mode = keyboard_mode_none;
 
+const keyboard_mode joystick_modes = keyboard_mode_level;
+int jx, jy, jw, jh; // joystick panel position
+int jcx, jcy; // joystick center position
+int js; // size of joystick region
+boolean joystick_visible; // is joystick shown
+int jmti; // joystick MT index
+
 button_t buttons[BUTTONS_N] = {
-  {KEY_UPARROW, "↑", keyboard_mode_menu | keyboard_mode_level},
-  {KEY_DOWNARROW, "↓", keyboard_mode_menu | keyboard_mode_level},
-  {KEY_LEFTARROW, "←", keyboard_mode_menu | keyboard_mode_level},
-  {KEY_RIGHTARROW, "→", keyboard_mode_menu | keyboard_mode_level},
+  {KEY_UPARROW, "↑", keyboard_mode_menu},
+  {KEY_DOWNARROW, "↓", keyboard_mode_menu},
+  {KEY_LEFTARROW, "←", keyboard_mode_menu},
+  {KEY_RIGHTARROW, "→", keyboard_mode_menu},
   {KEY_ENTER, "ENTER", keyboard_mode_menu},
   {'y', "Y", keyboard_mode_message_input},
   {'n', "N", keyboard_mode_message_input},
@@ -57,8 +64,8 @@ button_t buttons[BUTTONS_N] = {
   {'5', "5", keyboard_mode_level},
   {'6', "6", keyboard_mode_level},
   {'7', "7", keyboard_mode_level},
-  {',', ",", keyboard_mode_level},
-  {'.', ".", keyboard_mode_level}
+  {KEY_LEFTARROW, "←", keyboard_mode_level},
+  {KEY_RIGHTARROW, "→", keyboard_mode_level}
 };
 
 void compute_button_positions() {
@@ -121,15 +128,15 @@ void compute_button_positions() {
   buttons[button_ctrl].x = sw - ox - buttons[button_ctrl].w;
   buttons[button_ctrl].y = y + ym + b;
 
-  buttons[button_period].w = 1.5 * b;
-  buttons[button_period].h = b;
-  buttons[button_period].x = sw - ox - buttons[button_period].w;
-  buttons[button_period].y = y + ym + 1;
+  buttons[button_turn_right].w = 1.5 * b;
+  buttons[button_turn_right].h = b;
+  buttons[button_turn_right].x = sw - ox - buttons[button_turn_right].w;
+  buttons[button_turn_right].y = y + ym + 1;
 
-  buttons[button_comma].w = 1.5 * b + 1;
-  buttons[button_comma].h = b;
-  buttons[button_comma].x = buttons[button_period].x - buttons[button_comma].w + 1;
-  buttons[button_comma].y = y + ym + 1;
+  buttons[button_turn_left].w = 1.5 * b + 1;
+  buttons[button_turn_left].h = b;
+  buttons[button_turn_left].x = buttons[button_turn_right].x - buttons[button_turn_left].w + 1;
+  buttons[button_turn_left].y = y + ym + 1;
 
 
   buttons[button_space].w = 3 * b;
@@ -161,6 +168,14 @@ void compute_button_positions() {
   buttons[button_one].y = ony + 2 * (nb - 1);
 }
 
+void compute_joystick_position() {
+  jx = keyboard_frame.x;
+  jy = keyboard_frame.y;
+  jw = buttons[button_two].x - jx - 10 * dp;
+  jh = keyboard_frame.h;
+  js = 150 * dp;
+}
+
 void keyboard_frame_install(int x, int y, int w, int h) {
   keyboard_frame.x = x;
   keyboard_frame.y = y;
@@ -168,6 +183,7 @@ void keyboard_frame_install(int x, int y, int w, int h) {
   keyboard_frame.h = h;
 
   compute_button_positions();
+  compute_joystick_position();
 }
 
 void keyboard_frame_uninstall() {
@@ -183,6 +199,11 @@ static void set_font() {
   SetFont(font, BLACK);
 }
 
+void draw_joystick_panel() {
+  DrawTextRect(jx, jy, jw, jh, "Movement panel", ALIGN_CENTER | VALIGN_BOTTOM);
+  DrawLine(jx + jw, jy, jx + jw, jy + jh, BLACK);
+}
+
 static void draw() {
   set_font();
   for (int i = 0; i < BUTTONS_N; i++) {
@@ -192,6 +213,9 @@ static void draw() {
       DrawTextRect(b->x, b->y, b->w, b->h, b->title, ALIGN_CENTER | VALIGN_MIDDLE);
       DrawRect(b->x, b->y, b->w, b->h, BLACK);
     }
+  }
+  if (current_mode & joystick_modes) {
+    draw_joystick_panel();
   }
   DrawRect(keyboard_frame.x, keyboard_frame.y, keyboard_frame.w, keyboard_frame.h, BLACK);
 }
@@ -210,9 +234,103 @@ void set_pressed(int i, boolean pressed) {
   pbdoom_post_event(e);
 }
 
+int handle_no_joy_visible(iv_mtinfo *mt_all, int count) {
+  for (int i = 0; i < count; i++) {
+    iv_mtinfo *mt = mt_all + i;
+
+    int x = mt->x;
+    int y = mt->y;
+
+    if (x >= jx && y >= jy && x <= jx + jw && y <= jy + jh) {
+      joystick_visible = true;
+      jcx = x;
+      jcy = y;
+      jmti = i;
+      DrawCircle(x, y, 5, BLACK);
+      DrawRect(x - js / 2, y - js / 2, js, js, BLACK);
+      if (IsInA2Update()) {
+        DynamicUpdateA2(x - js / 2, y - js / 2, js, js);
+      } else {
+        PartialUpdate(x - js / 2, y - js / 2, js, js);
+      }
+      return i;
+    }
+  }
+
+  return -1;
+}
+
+int last_dx, last_dy;
+
+void send_joy_event(int dx, int dy) {
+  if (dx == last_dx && dy == last_dy) {
+    return;
+  }
+  last_dx = dx;
+  last_dy = dy;
+  pbdoom_event e;
+  e.type = PBDOOM_EVENT_JOY;
+  e.b = dx;
+  e.c = dy;
+  pbdoom_post_event(e);
+}
+
+void handle_joy_visible(iv_mtinfo *joy_mt) {
+  int x = joy_mt->x;
+  int y = joy_mt->y;
+  int hjs = js / 2; // half js
+  if (x > jcx + hjs) {
+    x = jcx + hjs;
+  }
+  if (x < jcx - hjs) {
+    x = jcx - hjs;
+  }
+  if (y > jcy + hjs) {
+    y = jcy + hjs;
+  }
+  if (y < jcy - hjs) {
+    y = jcy - hjs;
+  }
+  double dx_r = (double) (x - jcx) / hjs;
+  double dy_r = (double) (y - jcy) / hjs;
+
+  int dx = dx_r * 100;
+  int dy = -dy_r * 100;
+
+  send_joy_event(dx, dy);
+}
+
+int handle_joystick_panel(iv_mtinfo *mt_all, int count) {
+  if (joystick_visible) {
+    if (count == 0 || !((mt_all + jmti)->active)) {
+      joystick_visible = false;
+      FillArea(jcx - js / 2, jcy - js / 2, js, js, WHITE);
+      if (IsInA2Update()) {
+        DynamicUpdateA2(jcx - js / 2, jcy - js / 2, js, js);
+      } else {
+        PartialUpdate(jcx - js / 2, jcy - js / 2, js, js);
+      }
+      send_joy_event(0, 0);
+      return -1;
+    } else {
+      handle_joy_visible(mt_all + jmti);
+      return jmti;
+    }
+  } else {
+    return handle_no_joy_visible(mt_all, count);
+  }
+}
+
 static int handle(int t, int index, int cnt) {
   if (t != EVT_MTSYNC) {
     return false;
+  }
+
+  iv_mtinfo *mt_all = GetTouchInfoI(index);
+  int joystick_handled_mt = -1;
+
+  if ((current_mode & joystick_modes)) {
+    joystick_handled_mt = handle_joystick_panel(mt_all, cnt);
   }
 
   int presses[BUTTONS_N];
@@ -220,9 +338,12 @@ static int handle(int t, int index, int cnt) {
     presses[i] = 0;
   }
 
-  iv_mtinfo *mt_all = GetTouchInfoI(index);
 
   for (int i = 0; i < cnt; i++) {
+    if (i == joystick_handled_mt) {
+      continue;
+    }
+
     iv_mtinfo *mt = mt_all + i;
 
     if (!mt->active) {
