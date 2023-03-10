@@ -1,3 +1,5 @@
+#include <math.h>
+
 #include "keyboard.h"
 #include "../render.h"
 #include "../gui.h"
@@ -42,10 +44,9 @@ keyboard_mode current_mode = keyboard_mode_none;
 
 const keyboard_mode joystick_modes = keyboard_mode_level;
 int jx, jy, jw, jh; // joystick panel position
-int jcx, jcy; // joystick center position
-int js; // size of joystick region
-boolean joystick_visible; // is joystick shown
-int jmti; // joystick MT index
+int jcx, jcy; // center of joystick extreme circle
+int jr; // radius of joystick extremes
+int jmti; // currently grabbed joystick MT index, -1 for no grabbed
 
 button_t buttons[BUTTONS_N] = {
   {KEY_UPARROW, "↑", keyboard_mode_menu},
@@ -173,7 +174,9 @@ void compute_joystick_position() {
   jy = keyboard_frame.y;
   jw = buttons[button_two].x - jx - 10 * dp;
   jh = keyboard_frame.h;
-  js = 150 * dp;
+  jr = 75 * dp;
+  jcx = jx + jw / 2;
+  jcy = jy + jh / 2;
 }
 
 void keyboard_frame_install(int x, int y, int w, int h) {
@@ -202,6 +205,8 @@ static void set_font() {
 void draw_joystick_panel() {
   DrawTextRect(jx, jy, jw, jh, "Movement panel", ALIGN_CENTER | VALIGN_BOTTOM);
   DrawLine(jx + jw, jy, jx + jw, jy + jh, BLACK);
+  DrawCircle(jcx, jcy, jr, BLACK);
+  DrawCircle(jcx, jcy, jr - 2, WHITE);
 }
 
 static void draw() {
@@ -234,7 +239,7 @@ void set_pressed(int i, boolean pressed) {
   pbdoom_post_event(e);
 }
 
-int handle_no_joy_visible(iv_mtinfo *mt_all, int count) {
+int handle_no_joy_grabbed(iv_mtinfo *mt_all, int count) {
   for (int i = 0; i < count; i++) {
     iv_mtinfo *mt = mt_all + i;
 
@@ -242,17 +247,7 @@ int handle_no_joy_visible(iv_mtinfo *mt_all, int count) {
     int y = mt->y;
 
     if (x >= jx && y >= jy && x <= jx + jw && y <= jy + jh) {
-      joystick_visible = true;
-      jcx = x;
-      jcy = y;
       jmti = i;
-      DrawCircle(x, y, 5, BLACK);
-      DrawRect(x - js / 2, y - js / 2, js, js, BLACK);
-      if (IsInA2Update()) {
-        DynamicUpdateA2(x - js / 2, y - js / 2, js, js);
-      } else {
-        PartialUpdate(x - js / 2, y - js / 2, js, js);
-      }
       return i;
     }
   }
@@ -275,49 +270,35 @@ void send_joy_event(int dx, int dy) {
   pbdoom_post_event(e);
 }
 
-void handle_joy_visible(iv_mtinfo *joy_mt) {
+void handle_joy_grabbed(iv_mtinfo *joy_mt) {
   int x = joy_mt->x;
   int y = joy_mt->y;
-  int hjs = js / 2; // half js
-  if (x > jcx + hjs) {
-    x = jcx + hjs;
-  }
-  if (x < jcx - hjs) {
-    x = jcx - hjs;
-  }
-  if (y > jcy + hjs) {
-    y = jcy + hjs;
-  }
-  if (y < jcy - hjs) {
-    y = jcy - hjs;
-  }
-  double dx_r = (double) (x - jcx) / hjs;
-  double dy_r = (double) (y - jcy) / hjs;
 
-  int dx = dx_r * 100;
-  int dy = -dy_r * 100;
+  double dx = x - jcx;
+  double dy = y - jcy;
+  double len = sqrt(dx * dx + dy * dy);
 
-  send_joy_event(dx, dy);
+  if (len > jr) {
+    double k = jr / len;
+    dx *= k;
+    dy *= k;
+  }
+
+  send_joy_event(dx / jr * 100, -dy / jr * 100);
 }
 
 int handle_joystick_panel(iv_mtinfo *mt_all, int count) {
-  if (joystick_visible) {
+  if (jmti >= 0) {
     if (count == 0 || !((mt_all + jmti)->active)) {
-      joystick_visible = false;
-      FillArea(jcx - js / 2, jcy - js / 2, js, js, WHITE);
-      if (IsInA2Update()) {
-        DynamicUpdateA2(jcx - js / 2, jcy - js / 2, js, js);
-      } else {
-        PartialUpdate(jcx - js / 2, jcy - js / 2, js, js);
-      }
+      jmti = -1;
       send_joy_event(0, 0);
       return -1;
     } else {
-      handle_joy_visible(mt_all + jmti);
+      handle_joy_grabbed(mt_all + jmti);
       return jmti;
     }
   } else {
-    return handle_no_joy_visible(mt_all, count);
+    return handle_no_joy_grabbed(mt_all, count);
   }
 }
 
