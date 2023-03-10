@@ -6,7 +6,8 @@ typedef enum {
   PBDOOM_EVENT_KEYUP,
   PBDOOM_EVENT_EXIT,
   PBDOOM_EVENT_SWITCH_RENDER_MODE,
-  PBDOOM_EVENT_JOY
+  PBDOOM_EVENT_JOY,
+  PBDOOM_EVENT_MOUSE
 } pbdoom_event_type;
 
 typedef struct {

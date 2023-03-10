@@ -89,6 +89,13 @@ void I_GetEvent(pbdoom_event *e)
       D_PostEvent(&event);
       break;
 
+    case PBDOOM_EVENT_MOUSE:
+      event.type = ev_mouse;
+      event.data2 = e->b;
+      event.data3 = e->c;
+      D_PostEvent(&event);
+      break;
+
     case PBDOOM_EVENT_SWITCH_RENDER_MODE:
       pbdoom_render_set_mode(e->a);
       break;

@@ -34,8 +34,6 @@ enum {
   button_five,
   button_six,
   button_seven,
-  button_turn_left,
-  button_turn_right,
   BUTTONS_N
 } button_i;
 
@@ -47,6 +45,10 @@ int jx, jy, jw, jh; // joystick panel position
 int jcx, jcy; // center of joystick extreme circle
 int jr; // radius of joystick extremes
 int jmti; // currently grabbed joystick MT index, -1 for no grabbed
+
+int tx, ty, tw, th; // turn panel position
+int tcx; // center of turn panel
+int tmti; // currently grabbed turn panel MT index, -1 for no grabbed
 
 button_t buttons[BUTTONS_N] = {
   {KEY_UPARROW, "↑", keyboard_mode_menu},
@@ -65,8 +67,6 @@ button_t buttons[BUTTONS_N] = {
   {'5', "5", keyboard_mode_level},
   {'6', "6", keyboard_mode_level},
   {'7', "7", keyboard_mode_level},
-  {KEY_LEFTARROW, "←", keyboard_mode_level},
-  {KEY_RIGHTARROW, "→", keyboard_mode_level}
 };
 
 void compute_button_positions() {
@@ -124,26 +124,8 @@ void compute_button_positions() {
   buttons[button_n].w = b;
   buttons[button_n].h = b;
 
-  buttons[button_ctrl].w = 3 * b;
-  buttons[button_ctrl].h = 1 * b;
-  buttons[button_ctrl].x = sw - ox - buttons[button_ctrl].w;
-  buttons[button_ctrl].y = y + ym + b;
-
-  buttons[button_turn_right].w = 1.5 * b;
-  buttons[button_turn_right].h = b;
-  buttons[button_turn_right].x = sw - ox - buttons[button_turn_right].w;
-  buttons[button_turn_right].y = y + ym + 1;
-
-  buttons[button_turn_left].w = 1.5 * b + 1;
-  buttons[button_turn_left].h = b;
-  buttons[button_turn_left].x = buttons[button_turn_right].x - buttons[button_turn_left].w + 1;
-  buttons[button_turn_left].y = y + ym + 1;
-
-
-  buttons[button_space].w = 3 * b;
-  buttons[button_space].h = b;
-  buttons[button_space].x = sw - ox - buttons[button_space].w;
-  buttons[button_space].y = y + ym + 2 * b - 1;
+  int ctrlw = 3 * b;
+  int ctrlx = sw - ox - ctrlw;
 
   int nb;
   if (gui_size > size_m) {
@@ -153,7 +135,7 @@ void compute_button_positions() {
   }
   int cwb = 3 * nb - 2;
   int chb = 3 * nb - 2;
-  int wb = buttons[button_ctrl].x - (buttons[button_right].x + b);
+  int wb = ctrlx - (buttons[button_right].x + b);
   int onx = buttons[button_right].x + buttons[button_right].w + (wb - cwb) / 2;
   int ony = y + (keyboard_frame.h - chb) / 2;
   int hb = sw;
@@ -179,6 +161,41 @@ void compute_joystick_position() {
   jcy = jy + jh / 2;
 }
 
+void compute_right_side_game_positions() {
+  int sw = keyboard_frame.w;
+  int b;
+  int ox;
+  if (gui_size > size_m) {
+    b = 100 * dp;
+    ox = b;
+  } else {
+    b = 60 * dp;
+    ox = 5 * dp;
+  }
+  int ch = 3 * b;
+  int y = keyboard_frame.y;
+  int ym = (keyboard_frame.h - ch) / 2;
+
+  int w = keyboard_frame.w - (buttons[button_four].x + buttons[button_four].w) - 20 * dp;
+  int x = keyboard_frame.x + keyboard_frame.w - w - 10 * dp;
+
+  tw = w;
+  th = b;
+  tx = x;
+  ty = y + ym;
+  tcx = tx + tw / 2;
+
+  buttons[button_ctrl].w = w;
+  buttons[button_ctrl].h = b;
+  buttons[button_ctrl].x = x;
+  buttons[button_ctrl].y = y + ym + 1 * b - 1;
+
+  buttons[button_space].w = w;
+  buttons[button_space].h = b;
+  buttons[button_space].x = x;
+  buttons[button_space].y = y + ym + 2 * b - 2;
+}
+
 void keyboard_frame_install(int x, int y, int w, int h) {
   keyboard_frame.x = x;
   keyboard_frame.y = y;
@@ -187,6 +204,7 @@ void keyboard_frame_install(int x, int y, int w, int h) {
 
   compute_button_positions();
   compute_joystick_position();
+  compute_right_side_game_positions();
 }
 
 void keyboard_frame_uninstall() {
@@ -203,10 +221,16 @@ static void set_font() {
 }
 
 void draw_joystick_panel() {
-  DrawTextRect(jx, jy, jw, jh, "Movement panel", ALIGN_CENTER | VALIGN_BOTTOM);
+  DrawTextRect(jx, jy, jw, jh, "Movement", ALIGN_CENTER | VALIGN_BOTTOM);
   DrawLine(jx + jw, jy, jx + jw, jy + jh, BLACK);
   DrawCircle(jcx, jcy, jr, BLACK);
   DrawCircle(jcx, jcy, jr - 2, WHITE);
+}
+
+void draw_turn_panel() {
+  DrawTextRect(tx, ty, tw, th, "Turn", ALIGN_CENTER | VALIGN_BOTTOM);
+  DrawLine(tcx, ty, tcx, ty + th, BLACK);
+  DrawRect(tx, ty, tw, th, BLACK);
 }
 
 static void draw() {
@@ -221,6 +245,7 @@ static void draw() {
   }
   if (current_mode & joystick_modes) {
     draw_joystick_panel();
+    draw_turn_panel();
   }
   DrawRect(keyboard_frame.x, keyboard_frame.y, keyboard_frame.w, keyboard_frame.h, BLACK);
 }
@@ -239,24 +264,8 @@ void set_pressed(int i, boolean pressed) {
   pbdoom_post_event(e);
 }
 
-int handle_no_joy_grabbed(iv_mtinfo *mt_all, int count) {
-  for (int i = 0; i < count; i++) {
-    iv_mtinfo *mt = mt_all + i;
-
-    int x = mt->x;
-    int y = mt->y;
-
-    if (x >= jx && y >= jy && x <= jx + jw && y <= jy + jh) {
-      jmti = i;
-      return i;
-    }
-  }
-
-  return -1;
-}
 
 int last_dx, last_dy;
-
 void send_joy_event(int dx, int dy) {
   if (dx == last_dx && dy == last_dy) {
     return;
@@ -269,6 +278,7 @@ void send_joy_event(int dx, int dy) {
   e.c = dy;
   pbdoom_post_event(e);
 }
+
 
 void handle_joy_grabbed(iv_mtinfo *joy_mt) {
   int x = joy_mt->x;
@@ -287,6 +297,63 @@ void handle_joy_grabbed(iv_mtinfo *joy_mt) {
   send_joy_event(dx / jr * 100, -dy / jr * 100);
 }
 
+int handle_no_joy_grabbed(iv_mtinfo *mt_all, int count) {
+  for (int i = 0; i < count; i++) {
+    iv_mtinfo *mt = mt_all + i;
+
+    int x = mt->x;
+    int y = mt->y;
+
+    if (x >= jx && y >= jy && x <= jx + jw && y <= jy + jh) {
+      jmti = i;
+      handle_joy_grabbed(mt);
+      return i;
+    }
+  }
+
+  return -1;
+}
+
+
+void send_mouse_event(int dx, int dy) {
+  pbdoom_event e;
+  e.type = PBDOOM_EVENT_MOUSE;
+  e.b = dx;
+  e.c = dy;
+  pbdoom_post_event(e);
+}
+
+void handle_turn_panel_grabbed(iv_mtinfo *turn_mt) {
+  int x = turn_mt->x;
+
+  double dx = x - tcx;
+
+  if (dx > tw / 2) {
+    dx = tw / 2;
+  }
+  if (dx < -tw / 2) {
+    dx = -tw / 2;
+  }
+
+  send_mouse_event(dx, 0);
+}
+
+int handle_no_turn_panel_grabbed(iv_mtinfo *mt_all, int count) {
+  for (int i = 0; i < count; i++) {
+    iv_mtinfo *mt = mt_all + i;
+
+    int x = mt->x;
+    int y = mt->y;
+
+    if (x >= tx && y >= ty && x <= tx + tw && y <= ty + th) {
+      tmti = i;
+      handle_turn_panel_grabbed(mt);
+      return i;
+    }
+  }
+  return -1;
+}
+
 int handle_joystick_panel(iv_mtinfo *mt_all, int count) {
   if (jmti >= 0) {
     if (count == 0 || !((mt_all + jmti)->active)) {
@@ -302,6 +369,21 @@ int handle_joystick_panel(iv_mtinfo *mt_all, int count) {
   }
 }
 
+int handle_turn_panel(iv_mtinfo *mt_all, int count) {
+  if (tmti >= 0) {
+    if (count == 0 || !((mt_all + tmti)->active)) {
+      tmti = -1;
+      send_mouse_event(0, 0);
+      return -1;
+    } else {
+      handle_turn_panel_grabbed(mt_all + tmti);
+      return tmti;
+    }
+  } else {
+    return handle_no_turn_panel_grabbed(mt_all, count);
+  }
+}
+
 static int handle(int t, int index, int cnt) {
   if (t != EVT_MTSYNC) {
     return false;
@@ -309,9 +391,11 @@ static int handle(int t, int index, int cnt) {
 
   iv_mtinfo *mt_all = GetTouchInfoI(index);
   int joystick_handled_mt = -1;
+  int turn_handled_mt = -1;
 
   if ((current_mode & joystick_modes)) {
     joystick_handled_mt = handle_joystick_panel(mt_all, cnt);
+    turn_handled_mt = handle_turn_panel(mt_all, cnt);
   }
 
   int presses[BUTTONS_N];
@@ -319,9 +403,11 @@ static int handle(int t, int index, int cnt) {
     presses[i] = 0;
   }
 
-
   for (int i = 0; i < cnt; i++) {
     if (i == joystick_handled_mt) {
+      continue;
+    }
+    if (i == turn_handled_mt) {
       continue;
     }
 
