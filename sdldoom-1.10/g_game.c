@@ -316,38 +316,8 @@ void G_BuildTiccmd (ticcmd_t* cmd)
 	}
     
     // mouse
-    if (mousebuttons[mousebforward]) 
-	forward += forwardmove[speed];
-    
-    // forward double click
-    if (mousebuttons[mousebforward] != dclickstate && dclicktime > 1 ) 
-    { 
-	dclickstate = mousebuttons[mousebforward]; 
-	if (dclickstate) 
-	    dclicks++; 
-	if (dclicks == 2) 
-	{ 
-	    cmd->buttons |= BT_USE; 
-	    dclicks = 0; 
-	} 
-	else 
-	    dclicktime = 0; 
-    } 
-    else 
-    { 
-	dclicktime += ticdup; 
-	if (dclicktime > 20) 
-	{ 
-	    dclicks = 0; 
-	    dclickstate = 0; 
-	} 
-    }
- 
-    forward += mousey; 
-    cmd->angleturn -= mousex*0x8; 
+    cmd->angleturn -= mousex*0x8;
 
-    mousex = mousey = 0; 
-	 
     if (forward > MAXPLMOVE) 
 	forward = MAXPLMOVE; 
     else if (forward < -MAXPLMOVE) 
