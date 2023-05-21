@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added PBDoom version to the top title bar
+
 ### Fixed
 
 ## [v0.0.4]
