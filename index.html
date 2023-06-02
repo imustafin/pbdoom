@@ -95,7 +95,7 @@
 
           <a
             class="px-5 py-2.5 text-base font-bold text-center text-white bg-sky-600 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 inline-flex items-center no-underline w-full h-20 justify-center text-xl"
-            href="https://github.com/imustafin/pbdoom/releases/download/v0.0.4/applications.zip"
+            href="https://github.com/imustafin/pbdoom/releases/download/v0.0.5/applications.zip"
             ><span class="mr-2"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -113,7 +113,7 @@
                 />
               </svg>
             </span>
-            Download PBDoom (v0.0.4)
+            Download PBDoom (v0.0.5)
           </a>
           <br />
           <div class="w-full text-center mt-2">
@@ -140,21 +140,6 @@
                 <div
                   class="w-full bottom-0 text-gray-800 pt-2 text-center font-bold"
                 >
-                  Works on 10" displays
-                </div>
-              </div>
-
-              <div
-                class="hidden bg-white flex flex-col h-full duration-700 ease-in-out"
-                data-carousel-item
-              >
-                <img
-                  src="/assets/img/inch_6_display.png"
-                  class="h-full mx-auto pt-2"
-                />
-                <div
-                  class="w-full bottom-0 text-gray-800 pt-2 text-center font-bold"
-                >
                   Works on 6" displays
                 </div>
               </div>
@@ -171,6 +156,36 @@
                   class="w-full bottom-0 text-gray-800 pt-2 text-center font-bold"
                 >
                   Color settings
+                </div>
+              </div>
+
+              <div
+                class="hidden bg-white flex flex-col h-full duration-700 ease-in-out"
+                data-carousel-item
+              >
+                <img
+                  src="/assets/img/inch_10_display.png"
+                  class="h-full mx-auto pt-2"
+                />
+                <div
+                  class="w-full bottom-0 text-gray-800 pt-2 text-center font-bold"
+                >
+                  Works on 10" displays
+                </div>
+              </div>
+
+              <div
+                class="hidden bg-white flex flex-col h-full duration-700 ease-in-out"
+                data-carousel-item
+              >
+                <img
+                  src="/assets/img/render_modes.png"
+                  class="h-full mx-auto pt-2"
+                />
+                <div
+                  class="w-full bottom-0 text-gray-800 pt-2 text-center font-bold"
+                >
+                  Multiple rendering modes
                 </div>
               </div>
             </div>
@@ -197,6 +212,13 @@
                 type="button"
                 class="w-3 h-3 rounded-full"
                 data-carousel-slide-to="2"
+              ></button>
+
+              <button
+                aria-current="false"
+                type="button"
+                class="w-3 h-3 rounded-full"
+                data-carousel-slide-to="3"
               ></button>
             </div>
 
@@ -301,6 +323,41 @@
               <h1 class="text-2xl sm:text-3xl md:text-4xl mb-2">
                 <a
                   class="text-[#111827] underline"
+                  href="/2023/06/02/release-v0-0-5/"
+                  >PBDoom v0.0.5 has been released</a
+                >
+              </h1>
+              <span class="sm:text-lg md:text-xl lg:text-2xl">
+                Published: 2 June 2023
+              </span>
+              <div
+                class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden mt-4"
+              >
+                <h2 id="added">Added</h2>
+
+                <ul>
+                  <li>
+                    New joystick/trackpad controls scheme
+                    <a href="https://github.com/imustafin/pbdoom/issues/7"
+                      >#7</a
+                    >
+                  </li>
+                  <li>Added PBDoom version to the top title bar</li>
+                </ul>
+
+                <!-- excerpt -->
+              </div>
+              <a
+                href="/2023/06/02/release-v0-0-5/"
+                class="text-[#111827] underline text-xl"
+              >
+                Read more…
+              </a>
+            </div>
+            <div class="p-2 sm:p-4 bg-white shadow">
+              <h1 class="text-2xl sm:text-3xl md:text-4xl mb-2">
+                <a
+                  class="text-[#111827] underline"
                   href="/2023/02/23/release-v-0-0-4/"
                   >PBDoom v0.0.4 has been released</a
                 >
@@ -334,46 +391,6 @@
               </div>
               <a
                 href="/2023/02/23/release-v-0-0-4/"
-                class="text-[#111827] underline text-xl"
-              >
-                Read more…
-              </a>
-            </div>
-            <div class="p-2 sm:p-4 bg-white shadow">
-              <h1 class="text-2xl sm:text-3xl md:text-4xl mb-2">
-                <a
-                  class="text-[#111827] underline"
-                  href="/2023/02/13/release-v-0-0-3/"
-                  >PBDoom v0.0.3 has been released</a
-                >
-              </h1>
-              <span class="sm:text-lg md:text-xl lg:text-2xl">
-                Published: 13 February 2023
-              </span>
-              <div
-                class="prose lg:prose-lg prose-slate prose-code:before:hidden prose-code:after:hidden mt-4"
-              >
-                <h2 id="added">Added</h2>
-
-                <ul>
-                  <li>
-                    DPI (dp) button sizes for uniform sizing across devices
-                    <a href="https://github.com/imustafin/pbdoom/issues/3"
-                      >#3</a
-                    >
-                  </li>
-                  <li>
-                    Added vertical margins for game display (refactor display
-                    elements into frames)
-                  </li>
-                  <li>Added color settings menu</li>
-                  <li>Only buttons usable on the current screen are shown</li>
-                </ul>
-
-                <!-- excerpt -->
-              </div>
-              <a
-                href="/2023/02/13/release-v-0-0-3/"
                 class="text-[#111827] underline text-xl"
               >
                 Read more…
