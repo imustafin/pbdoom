@@ -1,10 +1,5 @@
 - image: /assets/img/splash.png
   text:
-    en: Works on 10" displays
-    ru: Работает на 10" экранах
-    tt: 10" экраннарда эшли
-- image: /assets/img/inch_6_display.png
-  text:
     en: Works on 6" displays
     ru: Работает на 6" экранах
     tt: 6" экраннарда эшли
@@ -13,3 +8,13 @@
     en: Color settings
     ru: Настройки цвета
     tt: Төс көйләүләре
+- image: /assets/img/inch_10_display.png
+  text:
+    en: Works on 10" displays
+    ru: Работает на 10" экранах
+    tt: 10" экраннарда эшли
+- image: /assets/img/render_modes.png
+  text:
+    en: Multiple rendering modes
+    ru: Несколько режимов отрисовки
+    tt: Берничә сурәтләү режимнары
