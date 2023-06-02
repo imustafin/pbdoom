@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- New joystict/trackpad controls scheme [#7](https://github.com/imustafin/pbdoom/issues/7)
+- New joystick/trackpad controls scheme [#7](https://github.com/imustafin/pbdoom/issues/7)
 - Added PBDoom version to the top title bar
 
 ## [v0.0.4]
