@@ -119,10 +119,6 @@ void game_frame_draw_screen(unsigned char *screen) {
   case DYNAMIC_A2:
     DynamicUpdateA2(ux, uy, uw, uh);
     break;
-  case DITHER_AREA_PATTERN_2_LEVEL:
-    DitherAreaPattern2Level(ux, uy, uw, uh);
-    PartialUpdate(ux, uy, uw, uh);
-    break;
   case DITHER_MANUAL_2_PATTERN:
     DitherArea(ux, uy, uw, uh, 2, DITHER_PATTERN);
     PartialUpdate(ux, uy, uw, uh);

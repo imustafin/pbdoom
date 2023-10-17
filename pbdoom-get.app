@@ -20,7 +20,7 @@ do
     nc -l -p "$LOCAL_PORT" > "$LOCAL_APP_PATH"
     echo "Application has been saved to '$LOCAL_APP_PATH'"
 
-    MON_IP=192.168.43.248
+    MON_IP=192.168.3.224
     MON_PORT=10002
     pbdoom.app | nc $MON_IP $MON_PORT
 done
