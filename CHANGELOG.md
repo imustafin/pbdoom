@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Removed `DitherAreaPattern2Level` dithering mode because it is not supported in the older SDK
+- Support for older devices (min GLIBC 2.4) like PocketBook 611 [#9](https://github.com/imustafin/pbdoom/issues/9)
+
 ### Fixed
 
 ## [v0.0.5]

@@ -7,9 +7,9 @@ jobs:
       GLOBAL_CACHE_VERSION: 1
       PBDOOM_PATH: pbdoom
       SDK_DOWNLOAD_PATH: sdk
-      SDK_REPO: pocketbook/SDK_6.3.0
-      SDK_REF: 23eb32c3a011a1df4ce3d8f22150dcdd34cbc75a
-      SDK_VARIANT: SDK-A13
+      SDK_REPO: blchinezu/pocketbook-sdk
+      SDK_REF: 64e9fa210dd90569f8eabea92da4d40f3d072fc1
+      SDK_VARIANT: SDK_481
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -46,7 +46,7 @@ jobs:
 
       - name: Build
         run: |
-          $SDK_DOWNLOAD_PATH/$SDK_VARIANT/bin/update_path.sh
+          sed -i "s@/srv/einkbuild/SDK2FREE/SDK-481@$(pwd)/$SDK_DOWNLOAD_PATH/$SDK_VARIANT@g" $SDK_DOWNLOAD_PATH/$SDK_VARIANT/share/cmake/arm_conf.cmake
 
           cd $PBDOOM_PATH
           echo "../$SDK_DOWNLOAD_PATH/$SDK_VARIANT" > sdk_path

@@ -9,7 +9,6 @@ icontext_menu *main_menu;
 enum {
   idx_render = 1,
   idx_render_dynamic_a2,
-  idx_render_dither_area_pattern_2_level,
   idx_render_dither_area_2,
   idx_render_no_dither,
 
@@ -23,11 +22,6 @@ imenu render_submenu[] = {
     ITEM_ACTIVE,
     idx_render_dynamic_a2,
     "DynamicA2"
-  },
-  {
-    ITEM_ACTIVE,
-    idx_render_dither_area_pattern_2_level,
-    "DitherAreaPattern2Level"
   },
   {
     ITEM_ACTIVE,
@@ -97,10 +91,6 @@ void main_menu_handler(int i) {
     send_render_event(DYNAMIC_A2);
     main_menu = NULL;
     break;
-  case idx_render_dither_area_pattern_2_level:
-    send_render_event(DITHER_AREA_PATTERN_2_LEVEL);
-    main_menu = NULL;
-    break;
   case idx_render_dither_area_2:
     send_render_event(DITHER_MANUAL_2_PATTERN);
     main_menu = NULL;
@@ -125,9 +115,6 @@ void make_main_menu() {
   switch (i_render_mode) {
   case DYNAMIC_A2:
     active_idx = idx_render_dynamic_a2;
-    break;
-  case DITHER_AREA_PATTERN_2_LEVEL:
-    active_idx = idx_render_dither_area_pattern_2_level;
     break;
   case DITHER_MANUAL_2_PATTERN:
     active_idx = idx_render_dither_area_2;

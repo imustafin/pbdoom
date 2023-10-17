@@ -24,7 +24,6 @@ configure_file(
 include_directories(${CMAKE_BINARY_DIR}/generated)
 ### end version
 
-
 add_executable(game.app
   main.c
   pbdoom_state.h
@@ -173,5 +172,7 @@ sdldoom-1.10/z_zone.h
 )
 target_link_libraries(game.app ${INKVIEW_LIBRARIES})
 target_link_libraries(game.app m)
+target_link_libraries(game.app rt)
 
-target_compile_options(game.app PRIVATE -Werror=implicit-function-declaration)
+target_compile_options(game.app PRIVATE -Werror=implicit-function-declaration -D_GNU_SOURCE -fsigned-char)
+set_property(TARGET game.app PROPERTY C_STANDARD 99)

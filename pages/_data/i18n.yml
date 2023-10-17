@@ -25,6 +25,10 @@ home:
     en: 'PBDoom is known to be running on:'
     ru: 'Известно, что PBDoom работает на этих устройствах:'
     tt: 'PBDoom бу җайланмаларда эшләве билгеле:'
+  device_compat_limited_desc:
+    en: 'PBDoom starts but works with limited functionality on:'
+    ru: 'PBDoom запускается, но работает в ограниченном режиме на:'
+    tt: 'PBDoom бу җайланмаларда башлый ала, ләкин чикләнгән функционалда эшли:'
   source_code_and_contacts:
     en: Source code and contacts
     ru: Исходный код и контакты

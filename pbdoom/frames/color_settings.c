@@ -211,7 +211,7 @@ static void uninstall() {
   
 }
 
-const int NUM_BUF_S = 10;
+#define NUM_BUF_S 10
 char num_buf[NUM_BUF_S];
 
 void draw_value_text(value *v) {
